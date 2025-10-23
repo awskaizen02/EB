@@ -58,4 +58,73 @@ Sales:x:1011:arosalez
 uid=1001(arosalez) gid=1001(arosalez) groups=1001(arosalez),1011(Sales)
 
 
+
 Oct 23 10:23:33 ip-10-0-10-9 sudo: arosalez : user NOT in sudoers ; TTY=pts/1 ; PWD=/home/ec2-user ; USE
+
+
+-------------------------------------------------------------
+In this lesson, you will learn how to:
+
+•Explain basic commands of the Vim file editor
+•Explain basic commands of the GNU nano file editor
+•Explain basic commands of the gedit file editor
+
+
+vi,vim  => file editor
+
+vi sample.txt	  = open as a file if save it available if not then no avaiable
+touch sample.txt  = create a file
+
+
+| Command         | Action                                   | Example            |
+| --------------- | ---------------------------------------- | ------------------ |
+| /word         | Search forward for “word”                | `/error`           |
+| ?word         | Search backward for “word”               | `?error`           |
+| n             | Repeat search in same direction          | —                  |
+| N             | Repeat search in opposite direction      | —                  |
+| :%s/old/new/g | Replace all “old” with “new” in file     | `:%s/linux/unix/g` |
+| :s/old/new/   | Replace “old” with “new” on current line | —                  |
+
+
+| Command       | Description          |
+| ------------- | -------------------- |
+| :w          | Save file            |
+| :w filename | Save as another file |
+| :wq         | Save and quit        |
+| :x          | Same as `:wq`        |
+| :q!         | Quit without saving  |
+
+
+| Command    | Action               | Example               |
+| ---------- | -------------------- | --------------------- |
+| x        | Delete one character | —                     |
+| dd       | Delete current line  | —                     |
+| ndd      | Delete *n* lines     | `3dd` deletes 3 lines |
+| u        | Undo last change     | —                     |
+| Ctrl + r | Redo                 | —                     |
+| yy       | Copy (yank) a line   | —                     |
+| p        | Paste after cursor   | —                     |
+| P        | Paste before cursor  | —                     |
+
+
+| Command | Action                    | Example                  |
+| ------- | ------------------------- | ------------------------ |
+| `h`     | Move left                 | —                        |
+| `l`     | Move right                | —                        |
+| `k`     | Move up                   | —                        |
+| `j`     | Move down                 | —                        |
+| `0`     | Move to beginning of line | —                        |
+| `$`     | Move to end of line       | —                        |
+| `G`     | Go to last line           | —                        |
+| `gg`    | Go to first line          | —                        |
+| `:n`    | Go to line number *n*     | `:15` → moves to line 15 |
+
+| Command | Mode   | Description                          |
+| ------- | ------ | ------------------------------------ |
+| `i`     | Insert | Insert text before cursor            |
+| `a`     | Insert | Insert text after cursor             |
+| `o`     | Insert | Open new line below and start typing |
+| `Esc`   | —      | Return to Command mode               |
+
+
+KC - Editing Files  ==> IN 10 MINUTES 5:50
