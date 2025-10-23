@@ -1,0 +1,61 @@
+
+
+-c --> add a comments (can store name and jobe role)
+-m --> creates a home directory (/home/user)
+
+[ec2-user@ip-10-0-10-9 ~]$ sudo useradd -c "Alejandro Rosalez, Sales Manager" -m arosalez
+
+
+[ec2-user@ip-10-0-10-9 ~]$ tail -2 /etc/passwd
+ec2-user:x:1000:1000:EC2 Default User:/home/ec2-user:/bin/bash
+arosalez:x:1001:1001:Alejandro Rosalez, Sales Manager:/home/arosalez:/bin/bash
+
+
+[ec2-user@ip-10-0-10-9 ~]$ sudo passwd arosalez
+Changing password for user arosalez.
+New password:
+Retype new password:
+passwd: all authentication tokens updated successfully.
+
+[ec2-user@ip-10-0-10-9 ~]$ sudo tail -1 /etc/shadow
+arosalez:$6$LEAmdlYU$vCZ9axOCmW.2/cVt/L4zprok3ecZd3cRuTBTtGkxubw7WqrXtLi0wGH6iPUO9uT5qRv5Othj6LzZcU6qEdxFV0:20384:0:99999:7:::
+
+
+
+
+[ec2-user@ip-10-0-10-9 ~]$ sudo cat /etc/passwd | cut -d: -f1
+	
+	cuts each line using : as the delimiter and extract th first field, whic is the username
+
+[ec2-user@ip-10-0-10-9 ~]$ sudo groupadd Sales
+[ec2-user@ip-10-0-10-9 ~]$ sudo groupadd HR
+[ec2-user@ip-10-0-10-9 ~]$ sudo groupadd Finance
+[ec2-user@ip-10-0-10-9 ~]$ sudo groupadd Personnel
+[ec2-user@ip-10-0-10-9 ~]$ sudo groupadd CEO
+[ec2-user@ip-10-0-10-9 ~]$ sudo groupadd Shipping
+[ec2-user@ip-10-0-10-9 ~]$ sudo groupadd Managers
+
+[ec2-user@ip-10-0-10-9 ~]$ tail -10  /etc/group
+psantos:x:1008:
+smartinez:x:1009:
+ssarkar:x:1010:
+Sales:x:1011:
+HR:x:1012:
+Finance:x:1013:
+Personnel:x:1014:
+CEO:x:1015:
+Shipping:x:1016:
+Managers:x:1017:
+
+[ec2-user@ip-10-0-10-9 ~]$ sudo usermod -a -G Sales arosalez
+
+
+[ec2-user@ip-10-0-10-9 ~]$ grep arosalez /etc/group
+arosalez:x:1001:
+Sales:x:1011:arosalez
+
+[ec2-user@ip-10-0-10-9 ~]$ id arosalez
+uid=1001(arosalez) gid=1001(arosalez) groups=1001(arosalez),1011(Sales)
+
+
+Oct 23 10:23:33 ip-10-0-10-9 sudo: arosalez : user NOT in sudoers ; TTY=pts/1 ; PWD=/home/ec2-user ; USE
