@@ -1,0 +1,433 @@
+Lab - 231 - Editing Files
+
+Task-1 - login and access the linux machine
+
+Task-2 - Vim tutorial
+
+
+[ec2-user@ip-10-0-10-230 ~]$ vimtutor
+
+	The h key is at the left and moves left.
+	The l key is at the right and moves right.
+	The j key looks like a down arrow
+	The k key looks like a up arrow
+	
+	1. Press the <ESC> key (to make sure you are in Normal mode).
+	
+	2. Type:      :q! <ENTER>. This exits the editor, DISCARDING any changes you have made.
+	
+	3. Get back here by executing the command that got you into this tutor. That might be:  vimtutor <ENTER>
+	
+1. The cursor is moved using either the arrow keys or the hjkl keys.
+         h (left)       j (down)       k (up)       l (right)
+
+  2. To start Vim from the shell prompt type:  vim FILENAME <ENTER>
+
+  3. To exit Vim type:     <ESC>   :q!   <ENTER>  to trash all changes.
+             OR type:      <ESC>   :wq   <ENTER>  to save the changes.
+
+  4. To delete the character at the cursor type:  x
+
+  5. To insert or append text type:
+         i   type inserted text   <ESC>         insert before the cursor
+         A   type appended text   <ESC>         append after the line
+	
+ 3. To delete from the cursor to the end of a line type:       d$
+  4. To delete a whole line type:                               dd
+
+  5. To repeat a motion prepend it with a number:   2w
+  6. The format for a change command is:
+               operator   [number]   motion
+     where:
+       operator - is what to do, such as  d  for delete
+       [number] - is an optional count to repeat the motion
+       motion   - moves over the text to operate on, such as  w (word),
+                  e (end of word),  $ (end of the line), etc.
+
+  7. To move to the start of the line use a zero:  0
+
+  8. To undo previous actions, type:           u  (lowercase u)
+     To undo all the changes on a line, type:  U  (capital U)
+     To undo the undos, type:                  CTRL-R
+	
+
+  1. To put back text that has just been deleted, type   p .  This puts the
+     deleted text AFTER the cursor (if a line was deleted it will go on the
+     line below the cursor).
+
+  2. To replace the character under the cursor, type   r   and then the
+     character you want to have there.
+
+  3. The change operator allows you to change from the cursor to where the
+     motion takes you.  eg. Type  ce  to change from the cursor to the end of
+     the word,  c$  to change to the end of a line.
+
+  4. The format for change is:
+
+         c   [number]   motion
+	
+------------------------------------------
+
+	•Navigate files and directories in Linux
+	•Explain basic commands for managing files and directories
+	•Compare absolute and relative paths
+	
+•Commands, hardware, and directories are represented as files.
+•Most system configurations are in files.
+
+
+[ec2-user@ip-172-31-39-210 ~]$ ls -l
+total 12
+-rw-r--r--. 1 ec2-user ec2-user 11340 Oct 24 11:36 sample.txt
+-rw-r--r--.  1 root root      817 Jan 29  2023 xattr.conf
+drwxr-xr-x.  4 root root       38 Oct  8 23:54 xdg
+drwxr-xr-x.  2 root root       59 Oct  7 20:04 yum.repos.d
+lrwxrwxrwx.  1 root root       29 Oct  7 20:04 system-release-cpe -> ../usr/lib/system-release-cpe
+
+
+ U  G   O
+-rw-r--r--
+
+- file
+d directory
+l link
+
+Understanding file names
+	•They are case sensitive.
+	•They must be unique within the directory.
+	•They should not contain /or spaces
+
+Understanding file extensions	
+	Extensions are optional and not necessarily mapped to applications	
+	
+This example shows three different text files with valid file names
+
+[ec2-user@ip-172-31-39-210 ~]$ touch sample sample_file Sample_file.txt
+
+[ec2-user@ip-172-31-39-210 ~]$ ls
+Sample_file.txt  sample  sample.txt  sample_file
+
+
+The file system organizes how files are stored on the hard drive. A file is located inside a directory.
+
+cd	// change directory 
+~	// user local profile
+/	// root direcotry ( os related files and folders)
+$	// normal user
+#	// root user
+
+
+/	Root of the file system
+/boot	Boot files and kernel
+/dev	Devices
+/etc	Configuration files
+/home	Standard users' home directories
+/media	Removable media
+/mnt	Network drives
+/root	Root user home directory
+/var	Log files, print spool, network services
+
+# https://www.geeksforgeeks.org/linux-unix/linux-file-hierarchy-structure/
+
+
+•The ls command displays a list of files in a directory.
+•Different colors represent different types of files.
+•ls command lists the content of the current directory.
+•ls dircommand lists the content of the dirdirectory.
+
+
+-l			Long format (shows permissions)
+-h			File sizes reported in a human-friendly format
+-a			Shows all files, including hidden files
+-R			Lists subdirectories 
+--sort=extension or -X	Sorts alphabetically by file extension 
+--sort=size or -S	Sorts by file size
+--sort=timeor -t	Sorts by modification time
+--sort=version or -v	Sorts by version number
+
+
+ec2-user@ip-172-31-39-210 /]$ ls -X
+bin   dev  home  lib64  media  opt   root  sbin  sys  usr
+boot  etc  lib   local  mnt    proc  run   srv   tmp  var
+
+[ec2-user@ip-172-31-39-210 /]$ ls -S
+boot  dev  var  usr   home  lib64  bin  local  mnt  proc
+etc   run  tmp  root  opt   sbin   lib  media  srv  sys
+
+[ec2-user@ip-172-31-39-210 /]$ ls -t
+tmp  etc   dev  sys   boot  opt  local  lib    media  sbin
+run  home  var  proc  root  usr  bin    lib64  mnt    srv
+
+[ec2-user@ip-172-31-39-210 /]$ ls -v
+bin   dev  home  lib64  media  opt   root  sbin  sys  usr
+boot  etc  lib   local  mnt    proc  run   srv   tmp  var
+
+morecommand
+	•Used to view file contents that don't fit on one screen.
+	•Loads entire contents of files before displaying results
+	•Can only scroll down
+	•Can be used in conjunction with other commands:
+	•cat file.txt | more
+
+
+Options:
+	-d: 	Displays information about how to navigate at the bottom of the screen
+	-f: 	Prevents line wrap
+	-p: Clears the screen before displaying the content
+	-s: Squeezes multiple blank lines into one line
+•num: Number of lines to display
+•/pattern: String to find in the file
+•linenum: The line numberwherethe content starts to display
+•file_name: Name of the file to display the content of
+
+less command
+	•Displays file contents that don't fit on one screen
+	•Can scroll up and down through content
+	•Loads faster than mor ebecause less doesn’t load every page before it displays results
+	•Used mostly for large files
+-------------------------------------------------------------------------------------------------	
+| Command    | Description                                                                      |
+| ---------- | -------------------------------------------------------------------------------- |
+| **`more`** | Basic pager    — shows file content one screen at a time.                        |
+| **`less`** | Enhanced pager — allows forward/backward movement, searching, and more features. |
+-------------------------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------------------------------------------
+| Feature                        | `more`                          |`less`                                        |
+| ------------------------------ | --------------------------------|--------------------------------------------- |
+| **Scroll Forward**             |  Yes (Spacebar / Enter)         |  Yes                                         |
+| **Scroll Backward**            |  Limited (depends on terminal)  |  Yes (with `b` key)                          |
+| **Search Text**                |  Not available                  |  Use `/text` (forward) or `?text` (backward) |
+| **Go to Line/End**             |  Not available                  |  `G` (end), `g` (start)                      |
+| **Performance on Large Files** |  Loads full file before viewing |  Loads as you scroll (faster)                |
+| **Edit Mode**                  |  No                             |  Can open in editor (`v` opens in `vi`)      |
+| **Exit Command**               | `q`                             | `q`                                          |
+-------------------------------------------------------------------------------------------------------------------
+	
+less [OPTIONS] filename
+	•Use Q to quit.
+	•Options:
+		-N: Shows line numbers
+		-X: Displays the content after the last command and does not clearthe screen when exiting
+		+F: Watches for file content changes
+
+		
+•Displays the first 10 lines of a file by default
+•Can display multiple files		
+
+
+[ec2-user@ip-172-31-39-210 ~]$ head sample.txt  sample_file
+==> sample.txt <==
+total 0
+dr-xr-xr-x. 156 root            root               0 Oct 24 11:26 .
+dr-xr-xr-x.  18 root            root             237 Oct  8 23:53 ..
+dr-xr-xr-x.   9 root            root               0 Oct 24 11:26 1
+dr-xr-xr-x.   9 root            root               0 Oct 24 11:26 10
+dr-xr-xr-x.   9 root            root               0 Oct 24 11:26 11
+dr-xr-xr-x.   9 root            root               0 Oct 24 11:26 12
+dr-xr-xr-x.   9 root            root               0 Oct 24 11:26 122
+dr-xr-xr-x.   9 root            root               0 Oct 24 11:26 1236
+dr-xr-xr-x.   9 root            root               0 Oct 24 11:26 124
+
+==> sample_file <==
+Sample_file.txt
+sample
+sample.txt
+sample_file
+
+
+Sudo head –n 5 /etc/passwd When the head command is used in conjunction with the -n option, you can specify the number of lines to display
+
+[ec2-user@ip-172-31-39-210 ~]$ head -6 sample.txt
+total 0
+dr-xr-xr-x. 156 root            root               0 Oct 24 11:26 .
+dr-xr-xr-x.  18 root            root             237 Oct  8 23:53 ..
+dr-xr-xr-x.   9 root            root               0 Oct 24 11:26 1
+dr-xr-xr-x.   9 root            root               0 Oct 24 11:26 10
+dr-xr-xr-x.   9 root            root               0 Oct 24 11:26 11
+
+Options:
+	-n <number>: First nlines to display
+	-c <number>: First cbytes to display
+	
+[ec2-user@ip-172-31-39-210 ~]$ head -c 60 sample.txt
+total 0
+dr-xr-xr-x. 156 root            root               0	
+
+
+The cp command copies files and directories
+.•By default, the cp command overwrites existing files that have the same name.
+
+Example:
+cp <file-name> <destination>
+
+[ec2-user@ip-172-31-39-210 ~]$ touch 1.txt
+[ec2-user@ip-172-31-39-210 ~]$ touch 2.txt
+[ec2-user@ip-172-31-39-210 ~]$ ls / > 1.txt
+[ec2-user@ip-172-31-39-210 ~]$ ls > 2.txt
+[ec2-user@ip-172-31-39-210 ~]$ cat 1.txt
+bin
+boot
+dev
+etc
+home
+lib
+lib64
+local
+
+[ec2-user@ip-172-31-39-210 ~]$ cat 2.txt
+1.txt
+2.txt
+
+[ec2-user@ip-172-31-39-210 ~]$ cp 1.txt 2.txt
+
+[ec2-user@ip-172-31-39-210 ~]$ cat 2.txt
+bin
+boot
+dev
+etc
+home
+lib
+lib64
+local
+
+
+
+cp	folderA/srcfile	folderB/destfile
+	•Copies the srcfile	that is located in folderA to folderB and names it destfile 
+	
+[ec2-user@ip-172-31-39-210 ~]$ cp sf_file  A/df_file
+[ec2-user@ip-172-31-39-210 ~]$ cat A/df_file
+1.txt
+A
+B
+C
+demo
+sf_file
+
+
+cp folderA/srcfile folderB/
+	•Copies the srcfile that is located in folderA to folderB(and bothfiles have the same name)
+	
+[ec2-user@ip-172-31-39-210 ~]$ cp sf_file B/
+[ec2-user@ip-172-31-39-210 ~]$ cat B/sf_file
+1.txt
+A
+B
+C
+demo
+sf_file	
+
+cp folderA/srcfile folderB/ folderC/destfile
+	•Copies the srcfile that is located in folderA to folderB and to folderC with the name destfile
+
+[ec2-user@ip-172-31-39-210 ~]$ cp sf_file B/2.txt C/
+
+[ec2-user@ip-172-31-39-210 ~]$ ls B/
+2.txt  A  sf_file
+
+[ec2-user@ip-172-31-39-210 ~]$ ls C/
+2.txt  Z  sf_file
+
+
+Option			Description
+cp -a			Archive files
+cp -f			Force copy by overwriting the destination file if needed
+cp -i			Interactive –Ask before overwritecp -lLink files instead of copy
+cp -L			Follow symbolic links
+cp -n			No file overwrite
+cp -R			Recursive copy (including hidden files)
+cp -u			Update –Copy when source is newer than destination
+cp -v			Verbose –Print informative messages
+
+
+
+•The rm command deletes files
+•If a file is write protected, a prompt will ask the user for confirmation.
+•Several files can be removed at once.
+•If you want to remove a complete directory, use the –r and –f 
+option: rm –rf dir
+
+[ec2-user@ip-172-31-39-210 B]$ rm sample.txt
+[ec2-user@ip-172-31-39-210 B]$ rm -r A/
+
+
+•Options:
+-d: Removes a directory; the directory must be empty: rm –d dir
+-r: Allows you to remove a non-empty directory: rm –r dir
+-f: Never prompt user (useful when deleting a directory with many files)
+-i: Prompts the user for confirmation for each file
+-v: Display the names of deleted files
+
+•If a file is write protected, a prompt will ask the user for confirmation.
+•Several files can be removed at once.
+•If you want to remove a complete directory, use the –r and –f option: rm –rf dir
+•You can use a regular expression: rm *.png removes all files that end with .png
+
+touch <file_name>						// to create a file
+touch <file1_name> touch <file2_name> touch <file3_name>	// to ceate multiple file
+mkdir <fodler_name>	F1 F2 F3 F4				// to create a folder
+mkdri -p  F1/X/Y/Z						// to ceate subfodler
+rm <file_name>							// to remove file	
+rm -rf <fodler_name>						// to remove folder
+cp  <file>, *	<destination>					// to copy single, multiple files						
+cp -r <fodler with files>					// copy folder with files
+mv <old_name> <new_name>					// to rename file/fodler	
+mv <source_file> <destination_file>				// cut and past file
+mv -r <source_folder> <destination_folder>			// cut and past fodler
+
+r w x
+- - - = -
+- - 1 = 1
+- 2 - = 2
+- 2 1 = 3
+4 - - = 4
+4 - 1 = 5
+4 2 - = 6
+4 2 1 = 7
+
+mkdir -m 700 Z
+[ec2-user@ip-172-31-39-210 ~]$ mkdir -m 700 Z
+[ec2-user@ip-172-31-39-210 ~]$ ls -ld Z
+drwx------. 2 ec2-user ec2-user 6 Oct 24 12:46 Z
+
+
+The mv command moves a file from one directory to another
+The mv command renames a file if the source and destination are the same
+
+By default, the mv command overwrites existing files that have the same name
+
+
+[ec2-user@ip-172-31-39-210 ~]$ cat 1.txt
+1.txt
+A
+B
+C
+Z
+demo
+sf_file
+
+[ec2-user@ip-172-31-39-210 ~]$ cat Z/1.txt
+bin
+boot
+dev
+etc
+home
+lib
+
+[ec2-user@ip-172-31-39-210 ~]$ mv 1.txt Z/1.txt
+
+[ec2-user@ip-172-31-39-210 ~]$ ls
+A  B  C  Z  demo  sf_file
+
+[ec2-user@ip-172-31-39-210 ~]$ cat Z/1.txt
+1.txt
+A
+B
+C
+Z
+demo
+sf_file
+
+
+page -20
