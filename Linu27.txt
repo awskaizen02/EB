@@ -1,0 +1,596 @@
+
+# Managing Linux File Permissions
+
+
+You will learn how to:
+	•View and change file permissions
+	•Compare symbolic and absolute representations of file permissions
+	
+drwxr-xr-x 8 ec2-user root        97 Oct 27 09:14 CompanyA
+-rw-rw-r-- 1 ec2-user ec2-user 10240 Oct 27 09:52 spz	
+
+- File type: The file type indicates the regular file in a directory
+
+r w x
+- - 1 = 1
+- 2 - = 2
+- 2 1 = 3
+4 - - = 4
+4 - 1 = 5
+4 2 - = 6
+4 2 1 = 7
+
+Read (r): This permission gives the user control to open and read a file
+Write (w): This permission gives the user control to change the file's content
+Execute (x): This permission gives the user the ability to run a program
+
+
+•Read: The read permission gives the control to open and read a file. 
+For example, the read permission on a directory lets you print out the file's content.
+
+•Write: The write permission gives the user control to change the file's content. 
+For example, the write permission on a directory gives the control to add, remove, and rename files that are stored in the directory. A user might have write permission on a file that is stored in a directory but does not have write permission for the directory itself. In that case, the user can change the file contents. However, the user cannot rename or remove the file from the directory.
+
+•Execute: In Linux, you must have this permission to run a program. If the permission is not set, a user can see or change the program code (if read and write permissions are set) but not run it
+
+Symbolic mode  = ug+rwx,o+r
+Absolute mode  = 774
+
+
+
+Linux uses two modes to configure permissions. 
+
+You must be able to interpret and use both modes, though you might prefer one over the other.
+
+The two modes are absolute mode and symbolic mode. 
+	•Absolute mode:Use numbers to represent file permissions. This mode is the most commonly used to set permissions.
+	•Symbolic mode:Use a combination of letters and symbols to add permissions or to remove any set permissions
+
+Note: With the chmod command, the user can change the permissions on a file. You must be a superuser or the owner of a file or directory to change its permissions.
+
+[ec2-user@ip-10-0-10-136 ~]$ mkdir demo_folder
+
+[ec2-user@ip-10-0-10-136 ~]$ ls -ld demo_folder/
+drwxrwxr-x 2 ec2-user ec2-user 6 Oct 27 10:00 demo_folder/
+
+[ec2-user@ip-10-0-10-136 ~]$ sudo chmod u=r,g=wx,o=x demo_folder/
+
+[ec2-user@ip-10-0-10-136 ~]$ ls -ld demo_folder/
+dr---wx--x 2 ec2-user ec2-user 6 Oct 27 10:00 demo_folder/
+
+[ec2-user@ip-10-0-10-136 ~]$ chmod u+wx,g-x,o+r demo_folder/
+[ec2-user@ip-10-0-10-136 ~]$ ls -ld demo_folder/
+drwx-w-r-x 2 ec2-user ec2-user 6 Oct 27 10:00 demo_folder/
+
+
+Note: A user is the owner of the file. Every file in the system belongs to precisely one user name, which is also called the file owner.
+
+•User: A user can create a new file or directory. The file's ownership is set to the user ID of the user who created the file.
+
+•Group: A user group can contain multiple users. Users who belong to that group will have the same Linux group permissions to access the file. Every file is also associated with one group name, which is called the group owner.
+
+•Other: Other ownership means that the user did not create the file and does not belong to a user group that could own the file
+
+
+The owner of the file is displayed to the right of where the permissions are displayed. The file owner controls permissions, and the permissions are set for the owner and apply to that user identity or name
+
+Group permissions can be used to simplify administrative tasks.
+
+Any user who is not the owner and not a member of an associated group is part of other for purposes of permissions.
+
+
+login as a normal user  and create file and folder
+
+[ec2-user@ip-10-0-10-136 ~]$ mkdir sample
+[ec2-user@ip-10-0-10-136 ~]$ touch user
+
+drwxrwxr-x 2 ec2-user ec2-user     6 Oct 27 10:09 sample  # 775
+-rw-rw-r-- 1 ec2-user ec2-user     0 Oct 27 10:09 user    # 664
+
+
+login as a root user  and create file and folder
+
+[root@ip-10-0-10-136 ~]# mkdir rdfodler
+[root@ip-10-0-10-136 ~]# touch rdfile
+[root@ip-10-0-10-136 ~]# ls -l
+total 0
+
+-rw-r--r-- 1 root root 0 Oct 27 10:10 rdfile                # 644
+drwxr-xr-x 2 root root 6 Oct 27 10:10 rdfodler		    # 755	
+
+
+[ec2-user@ip-10-0-10-136 ~]$ sudo useradd ab01
+
+[ec2-user@ip-10-0-10-136 ~]$ ls -ld test/
+drwxrwxr-x 3 ec2-user ec2-user 44 Oct 27 09:38 test/
+
+[ec2-user@ip-10-0-10-136 ~]$ sudo chown ab01 test/
+
+[ec2-user@ip-10-0-10-136 ~]$ ls -ld test/
+drwxrwxr-x 3 ab01 ec2-user 44 Oct 27 09:38 test/
+
+[ec2-user@ip-10-0-10-136 ~]$ sudo useradd ab02
+[ec2-user@ip-10-0-10-136 ~]$ sudo useradd ab03
+
+[ec2-user@ip-10-0-10-136 ~]$ sudo chown :ab02 sample/
+
+[ec2-user@ip-10-0-10-136 ~]$ ls -ld sample/
+drwxrwxr-x 2 ec2-user ab02 6 Oct 27 10:09 sample/
+
+[ec2-user@ip-10-0-10-136 ~]$ ls -l
+total 12
+drwxr-xr-x 8 ec2-user root        97 Oct 27 09:14 CompanyA
+drwx-w-r-x 2 ec2-user ec2-user     6 Oct 27 10:00 demo_folder
+drwxrwxr-x 2 ec2-user ab02         6 Oct 27 10:09 sample
+-rw-rw-r-- 1 ec2-user ec2-user 10240 Oct 27 09:52 spz
+drwxrwxr-x 3 ab01     ec2-user    44 Oct 27 09:38 test
+-rw-rw-r-- 1 ec2-user ec2-user     0 Oct 27 10:09 user
+
+[ec2-user@ip-10-0-10-136 ~]$ sudo chown ab03:ab02 demo_folder/
+
+[ec2-user@ip-10-0-10-136 ~]$ ls -l
+total 12
+drwxr-xr-x 8 ec2-user root        97 Oct 27 09:14 CompanyA
+drwx-w-r-x 2 ab03     ab02         6 Oct 27 10:00 demo_folder
+drwxrwxr-x 2 ec2-user ab02         6 Oct 27 10:09 sample
+-rw-rw-r-- 1 ec2-user ec2-user 10240 Oct 27 09:52 spz
+drwxrwxr-x 3 ab01     ec2-user    44 Oct 27 09:38 test
+-rw-rw-r-- 1 ec2-user ec2-user     0 Oct 27 10:09 user
+
+
+symbolic mode
+rwx -wx r-x = 735
+--x r-- -w- = 142
+
+absolute mode 
+765	    = rwxrw-r-x	
+432         = r---wx-w-
+
+
+These are some best practices when managing permissions in Linux:
+•Do not use chmod 777.It grants read, write, and execute permissions to every user.
+•Follow the principle of least permissions. Give the least number of users the least amount of file access at first, and grant more access only when the user has a need.
+•Limit file names to alphanumeric characters, dots, and dashes.
+•Remember that some characters have special functions.
+
+complete - KC - Managing File Permissions
+
+
+
+Task 1: Use SSH to connect to an Amazon Linux EC2 instance
+
+Task 2: Change file and folder ownership
+
+[ec2-user@ip-10-0-10-58 ~]$ sudo chown mjackson companyA/
+[ec2-user@ip-10-0-10-58 ~]$ ls -ld companyA/
+drwxr-xr-x 10 mjackson Personnel 147 Oct 27 10:39 companyA/
+
+[ec2-user@ip-10-0-10-58 companyA]$ sudo chown mmajor:Finance Finance/
+[ec2-user@ip-10-0-10-58 companyA]$ ls -l
+
+
+[ec2-user@ip-10-0-10-58 companyA]$ pwd
+/home/ec2-user/companyA
+[ec2-user@ip-10-0-10-58 companyA]$ ls -l
+
+[ec2-user@ip-10-0-10-58 companyA]$ sudo chown -R  mjackson:Personnel /home/ec2-user/companyA/
+[ec2-user@ip-10-0-10-58 companyA]$ ls -l
+
+[ec2-user@ip-10-0-10-58 companyA]$ ls -laR
+
+
+Task 3: Change permission modes
+
+[ec2-user@ip-10-0-10-58 companyA]$ pwd
+/home/ec2-user/companyA
+[ec2-user@ip-10-0-10-58 companyA]$ sudo vi symbolic_mode_file
+[ec2-user@ip-10-0-10-58 companyA]$ sudo chmod g+w symbolic_mode_file
+[ec2-user@ip-10-0-10-58 companyA]$ sudo vi absolute_mode_file
+[ec2-user@ip-10-0-10-58 companyA]$ sudo chmod 764 absolute_mode_file
+[ec2-user@ip-10-0-10-58 companyA]$ ls -l
+total 0
+-rwxrw-r-- 1 root     root       0 Oct 27 11:00 absolute_mode_file
+-rw-rw-r-- 1 root     root       0 Oct 27 10:59 symbolic_mode_file
+
+
+Task 4: Assign permissions
+
+[ec2-user@ip-10-0-10-58 companyA]$ ls
+absolute_mode_file  Employees  Management  SharedFolders
+CEO                 Finance    Roster.csv  Shipping
+Documents           HR         Sales       symbolic_mode_file
+[ec2-user@ip-10-0-10-58 companyA]$ sudo chown -R eowusu:Shipping Shipping
+[ec2-user@ip-10-0-10-58 companyA]$  sudo chown -R nwolf:Sales Sales
+[ec2-user@ip-10-0-10-58 companyA]$ ls -laR Shipping
+Shipping:
+total 0
+drwxr-xr-x  2 eowusu   Shipping    6 Oct 27 10:39 .
+drwxr-xr-x 11 mjackson Personnel 214 Oct 27 11:00 ..
+[ec2-user@ip-10-0-10-58 companyA]$ ls -laR Sales
+Sales:
+total 0
+drwxr-xr-x  2 nwolf    Sales       6 Oct 27 10:39 .
+drwxr-xr-x 11 mjackson Personnel 214 Oct 27 11:00 ..
+
+take 15 min break 4:50 back then complet the lab -
+
+
+---------------------------------------------------------------------------------
+
+You will learn how to:
+	•Describe the purpose of special characters used with commands in Bash
+	•Describe commonly used text search and manipulation commands
+	•Explain redirection and describe common syntax for various redirect options
+
+
+Special characters, wildcards, and redirection are all used with commands in Bash. You’ll see use cases for these options.
+
+
+In the Bash shell, a space is a delimiter(a separator)•
+Example: usermod -c devuser jdoe
+	•This command adds the comment devuser on the jdoe line in the /etc/passwd file
+	•The space separates the two arguments that are passed to the command usermod
+•To force Bash to recognize the space inside an argument, a value is enclosed in quotation marks (" ")
+•Example: usermod -c "This is a dev user"  jdoe
+
+
+Metacharacter	Description
+-------------------------------------------------------------------------------------------------------------
+*(star)		Any number of any character(wildcard)
+?(hook)		Any one character(wildcard)
+[characters]	Any matching characters between brackets(wildcard)
+`cmd`or $cmd	Command substitution—uses backticks (`), not single quotation marks(' ')
+;		Chain commands together
+~		Represents the home directory of the user
+..		Represents the previous working directory
+
+
+
+Bash metacharacters are special characters that have a meaning to the shell and that users can use to work faster and more powerful interaction with Bash. 
+
+They are especially useful when writing scripts.
+
+[ec2-user@ip-172-31-54-45 ~]$ touch sam{1..5}.sh
+[ec2-user@ip-172-31-54-45 ~]$ touch sam{1..5}.txt
+[ec2-user@ip-172-31-54-45 ~]$ touch sam{1..5}.py
+[ec2-user@ip-172-31-54-45 ~]$ touch sand{1..5}.py
+[ec2-user@ip-172-31-54-45 ~]$ touch sand{1..5}.txt
+[ec2-user@ip-172-31-54-45 ~]$ touch sand{1..5}book.txt
+[ec2-user@ip-172-31-54-45 ~]$ ls
+sam1.py   sam2.txt  sam4.sh   sand1.py       sand2book.txt  sand4.txt
+sam1.sh   sam3.py   sam4.txt  sand1.txt      sand3.py       sand4book.txt
+sam1.txt  sam3.sh   sam5.py   sand1book.txt  sand3.txt      sand5.py
+sam2.py   sam3.txt  sam5.sh   sand2.py       sand3book.txt  sand5.txt
+sam2.sh   sam4.py   sam5.txt  sand2.txt      sand4.py       sand5book.txt
+[ec2-user@ip-172-31-54-45 ~]$ touch land{1..5}.txt
+[ec2-user@ip-172-31-54-45 ~]$ ls
+land1.txt  sam1.sh   sam3.sh   sam5.sh        sand2.txt      sand4.txt
+land2.txt  sam1.txt  sam3.txt  sam5.txt       sand2book.txt  sand4book.txt
+land3.txt  sam2.py   sam4.py   sand1.py       sand3.py       sand5.py
+land4.txt  sam2.sh   sam4.sh   sand1.txt      sand3.txt      sand5.txt
+land5.txt  sam2.txt  sam4.txt  sand1book.txt  sand3book.txt  sand5book.txt
+sam1.py    sam3.py   sam5.py   sand2.py       sand4.py
+[ec2-user@ip-172-31-54-45 ~]$ ls sand*.txt
+sand1.txt      sand2.txt      sand3.txt      sand4.txt      sand5.txt
+sand1book.txt  sand2book.txt  sand3book.txt  sand4book.txt  sand5book.txt
+[ec2-user@ip-172-31-54-45 ~]$ ls ??nd1.txt
+land1.txt  sand1.txt
+[ec2-user@ip-172-31-54-45 ~]$ ls sand?.txt
+sand1.txt  sand2.txt  sand3.txt  sand4.txt  sand5.txt
+
+[ec2-user@ip-172-31-54-45 ~]$ touch log_{a..h}.log
+[ec2-user@ip-172-31-54-45 ~]$ ls
+ land1.txt         log_d.log   sam2.sh    sam5.sh         sand3.txt
+ land2.txt         log_e.log   sam2.txt   sam5.txt        sand3book.txt
+ land3.txt         log_f.log   sam3.py    sand1.py        sand4.py
+ land4.txt         log_g.log   sam3.sh    sand1.txt       sand4.txt
+ land5.txt         log_h.log   sam3.txt   sand1book.txt   sand4book.txt
+'log_[a..h].log'   sam1.py     sam4.py    sand2.py        sand5.py
+ log_a.log         sam1.sh     sam4.sh    sand2.txt       sand5.txt
+ log_b.log         sam1.txt    sam4.txt   sand2book.txt   sand5book.txt
+ log_c.log         sam2.py     sam5.py    sand3.py
+[ec2-user@ip-172-31-54-45 ~]$ ls log_[a..g].*
+log_a.log  log_g.log
+[ec2-user@ip-172-31-54-45 ~]$ ls log_[abfg].*
+log_a.log  log_b.log  log_f.log  log_g.log
+[ec2-user@ip-172-31-54-45 ~]$ ls sam[135].*
+sam1.py  sam1.sh  sam1.txt  sam3.py  sam3.sh  sam3.txt  sam5.py  sam5.sh  sam5.txt
+[ec2-user@ip-172-31-54-45 ~]$ ls sam[135].txt
+sam1.txt  sam3.txt  sam5.txt
+
+
+[ec2-user@ip-172-31-54-45 ~]$ pwd
+/home/ec2-user
+[ec2-user@ip-172-31-54-45 ~]$ echo "current location is pwd"
+current location is pwd
+[ec2-user@ip-172-31-54-45 ~]$ echo "current location is $pwd"
+current location is
+[ec2-user@ip-172-31-54-45 ~]$ echo "current location is $[pwd]"
+current location is 0
+[ec2-user@ip-172-31-54-45 ~]$ echo "current location is $(pwd)"
+current location is /home/ec2-user
+[ec2-user@ip-172-31-54-45 ~]$ echo "current location is [$(pwd)]"
+current location is [/home/ec2-user]
+[ec2-user@ip-172-31-54-45 ~]$ echo "current location is [`pwd`]"
+current location is [/home/ec2-user]
+[ec2-user@ip-172-31-54-45 ~]$ echo "current location is `pwd`"
+current location is /home/ec2-user
+
+[ec2-user@ip-172-31-54-45 ~]$ mkdir demo && cd demo
+[ec2-user@ip-172-31-54-45 demo]$ pwd
+/home/ec2-user/demo
+
+[ec2-user@ip-172-31-54-45 demo]$ sleep 60 &
+[1] 2389
+[ec2-user@ip-172-31-54-45 demo]$ ps
+    PID TTY          TIME CMD
+   2141 pts/1    00:00:00 bash
+   2389 pts/1    00:00:00 sleep
+   2391 pts/1    00:00:00 ps
+[ec2-user@ip-172-31-54-45 demo]$
+
+
+$ used for variabls or command subsitution echo $USER
+
+Operator		Description
+>			Sends the output of a command to a file
+<			Receives the input for a command from a file
+|			Runs a command and redirects its output as input to  another command
+>>			Appends the output of a command to  the existing contents of a file
+2>			Redirects errors that are generated by a command to a file
+2>>			Appends errors that are generated by a command to the existing contentsof a file
+
+How the pipe redirector is used
+ls | grep demo
+
+[ec2-user@ip-172-31-54-45 ~]$ ls
+ demo              log_c.log   sam2.py    sam5.py         sand3.py
+ land1.txt         log_d.log   sam2.sh    sam5.sh         sand3.txt
+ land2.txt         log_e.log   sam2.txt   sam5.txt        sand3book.txt
+ land3.txt         log_f.log   sam3.py    sand1.py        sand4.py
+ land4.txt         log_g.log   sam3.sh    sand1.txt       sand4.txt
+ land5.txt         log_h.log   sam3.txt   sand1book.txt   sand4book.txt
+'log_[a..h].log'   sam1.py     sam4.py    sand2.py        sand5.py
+ log_a.log         sam1.sh     sam4.sh    sand2.txt       sand5.txt
+ log_b.log         sam1.txt    sam4.txt   sand2book.txt   sand5book.txt
+[ec2-user@ip-172-31-54-45 ~]$ ls | grep demo
+demo
+
+[ec2-user@ip-172-31-54-45 ~]$ ps -ef | grep sshd
+root        1573       1  0 11:29 ?        00:00:00 sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups
+root        1641    1573  0 11:29 ?        00:00:00 sshd: ec2-user [priv]
+ec2-user    1664    1641  0 11:30 ?        00:00:00 sshd: ec2-user@pts/0
+root        2132    1573  0 11:45 ?        00:00:00 sshd: ec2-user [priv]
+ec2-user    2138    2132  0 11:45 ?        00:00:00 sshd: ec2-user@pts/1
+ec2-user    2452    2141  0 11:53 pts/1    00:00:00 grep --color=auto sshd
+
+
+[ec2-user@ip-172-31-54-45 ~]$ uptime
+ 11:55:45 up 25 min,  2 users,  load average: 0.00, 0.00, 0.00
+[ec2-user@ip-172-31-54-45 ~]$ uptime > info.txt
+[ec2-user@ip-172-31-54-45 ~]$ cat info.txt
+ 11:55:53 up 26 min,  2 users,  load average: 0.00, 0.00, 0.00
+[ec2-user@ip-172-31-54-45 ~]$ hostname
+ip-172-31-54-45.us-west-2.compute.internal
+[ec2-user@ip-172-31-54-45 ~]$ hostname > info.txt
+[ec2-user@ip-172-31-54-45 ~]$ cat info.txt
+ip-172-31-54-45.us-west-2.compute.internal
+[ec2-user@ip-172-31-54-45 ~]$ ip addr show eth0 >> info.txt
+Device "eth0" does not exist.
+[ec2-user@ip-172-31-54-45 ~]$ ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute
+       valid_lft forever preferred_lft forever
+2: ens5: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 9001 qdisc mq state UP group default qlen 1000
+    link/ether 0e:fa:c1:00:f5:0b brd ff:ff:ff:ff:ff:ff
+    altname enp0s5
+    altname eni-005d6c60bbd098ad4
+    altname device-number-0.0
+    inet 172.31.54.45/20 metric 512 brd 172.31.63.255 scope global dynamic ens5
+       valid_lft 1984sec preferred_lft 1984sec
+    inet6 fe80::cfa:c1ff:fe00:f50b/64 scope link proto kernel_ll
+       valid_lft forever preferred_lft forever
+[ec2-user@ip-172-31-54-45 ~]$ ip addr show ens5 >> info.txt
+[ec2-user@ip-172-31-54-45 ~]$ cat info.txt
+ip-172-31-54-45.us-west-2.compute.internal
+2: ens5: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 9001 qdisc mq state UP group default qlen 1000
+    link/ether 0e:fa:c1:00:f5:0b brd ff:ff:ff:ff:ff:ff
+    altname enp0s5
+    altname eni-005d6c60bbd098ad4
+    altname device-number-0.0
+    inet 172.31.54.45/20 metric 512 brd 172.31.63.255 scope global dynamic ens5
+       valid_lft 1949sec preferred_lft 1949sec
+    inet6 fe80::cfa:c1ff:fe00:f50b/64 scope link proto kernel_ll
+       valid_lft forever preferred_lft forever
+[ec2-user@ip-172-31-54-45 ~]$
+
+[ec2-user@ip-172-31-54-45 ~]$ less < info.txt
+
+
+stdiput	  : 0
+stdoutput : 1
+stderror  : 2
+
+date
+
+ls -z
+
+ls -s
+
+calc
+
+ls -l
+
+cal -3
+
+[ec2-user@ip-172-31-54-45 ~]$ ./1.sh  > output
+
+[ec2-user@ip-172-31-54-45 ~]$ ./1.sh  2> error
+
+[ec2-user@ip-172-31-54-45 ~]$ ./1.sh &> full
+[ec2-user@ip-172-31-54-45 ~]$ cat full
+
+[ec2-user@ip-172-31-54-45 ~]$ set -o noclobber    // to turn on this option
+[ec2-user@ip-172-31-54-45 ~]$ echo " hi" > 2.txt
+[ec2-user@ip-172-31-54-45 ~]$ echo "hello" > 2.txt
+-bash: 2.txt: cannot overwrite existing file
+[ec2-user@ip-172-31-54-45 ~]$ set +o noclobber      // to turn off this option
+[ec2-user@ip-172-31-54-45 ~]$ echo "hello" > 2.txt
+[ec2-user@ip-172-31-54-45 ~]$
+
+[ec2-user@ip-172-31-54-45 ~]$ ps -au
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root        1593  0.0  0.1 221360  1072 tty1     Ss+  11:29   0:00 /sbin/agetty -o
+root        1594  0.0  0.1 221404  1076 ttyS0    Ss+  11:29   0:00 /sbin/agetty -o
+ec2-user    2141  0.0  0.6 224796  5708 pts/1    Ss   11:45   0:00 -bash
+ec2-user    3013  0.0  0.3 223592  2840 pts/1    R+   12:10   0:00 ps -au
+[ec2-user@ip-172-31-54-45 ~]$ ps -au | grep root
+root        1593  0.0  0.1 221360  1072 tty1     Ss+  11:29   0:00 /sbin/agetty -o -p -- \u --noclear - linux
+root        1594  0.0  0.1 221404  1076 ttyS0    Ss+  11:29   0:00 /sbin/agetty -o -p -- \u --keep-baud 115200,57600,38400,9600 - vt220
+ec2-user    3015  0.0  0.2 222328  2120 pts/1    S+   12:10   0:00 grep --color=auto root
+
+[ec2-user@ip-172-31-54-45 ~]$ ps -au | awk '{print $1 ,$3 ,$7}'
+USER %CPU TTY
+root 0.0 tty1
+root 0.0 ttyS0
+ec2-user 0.0 pts/1
+ec2-user 0.0 pts/1
+ec2-user 0.0 pts/1
+
+
+The tee command reads the standard input (stdin) and writes the data to both to the standard output and files.
+In the example, the command hostname is directed to tee through a pipe |. 
+The standard input for tee in the output of the command hostname. 
+The tee command then writes the hostname to the file file1.txt and to the screen (in the shell)
+
+[ec2-user@ip-172-31-54-45 ~]$ ps -au | awk '{print $1 ,$3 ,$7}' | tee output01
+USER %CPU TTY
+root 0.0 tty1
+root 0.0 ttyS0
+ec2-user 0.0 pts/1
+ec2-user 0.0 pts/1
+ec2-user 0.0 pts/1
+ec2-user 0.0 pts/1
+[ec2-user@ip-172-31-54-45 ~]$ cat output01
+USER %CPU TTY
+root 0.0 tty1
+root 0.0 ttyS0
+ec2-user 0.0 pts/1
+ec2-user 0.0 pts/1
+ec2-user 0.0 pts/1
+ec2-user 0.0 pts/1
+
+[ec2-user@ip-172-31-54-45 ~]$ ls ; whoami ; who; ps
+ 1.sh       'log_[a..h].log'   sam1.py    sam4.txt        sand3.txt
+ 2.txt       log_a.log         sam1.sh    sam5.py         sand3book.txt
+ demo        log_b.log         sam1.txt   sam5.sh         sand4.py
+ error       log_c.log         sam2.py    sam5.txt        sand4.txt
+ full        log_d.log         sam2.sh    sand1.py        sand4book.txt
+ info.txt    log_e.log         sam2.txt   sand1.txt       sand5.py
+ land1.txt   log_f.log         sam3.py    sand1book.txt   sand5.txt
+ land2.txt   log_g.log         sam3.sh    sand2.py        sand5book.txt
+ land3.txt   log_h.log         sam3.txt   sand2.txt
+ land4.txt   op                sam4.py    sand2book.txt
+ land5.txt   output01          sam4.sh    sand3.py
+ec2-user
+ec2-user pts/1        2025-10-27 11:45 (42.111.160.191)
+    PID TTY          TIME CMD
+   2141 pts/1    00:00:00 bash
+   3260 pts/1    00:00:00 ps
+[ec2-user@ip-172-31-54-45 ~]$
+
+
+
+•Cuts sections from lines of text by character, byte position, or delimiter
+•Displays that information to standard output
+•Can be used to pull relevant information out of text files and display that information to you
+•Output can be piped to a new file
+
+[ec2-user@ip-172-31-54-45 ~]$ tail -5 /etc/passwd >> output01
+[ec2-user@ip-172-31-54-45 ~]$ cut -d ':' -f 1 output01
+USER %CPU TTY
+root 0.0 tty1
+root 0.0 ttyS0
+ec2-user 0.0 pts/1
+ec2-user 0.0 pts/1
+ec2-user 0.0 pts/1
+ec2-user 0.0 pts/1
+ec2-instance-connect
+stapunpriv
+rpcuser
+tcpdump
+ec2-user
+[ec2-user@ip-172-31-54-45 ~]$ cat output01
+USER %CPU TTY
+root 0.0 tty1
+root 0.0 ttyS0
+ec2-user 0.0 pts/1
+ec2-user 0.0 pts/1
+ec2-user 0.0 pts/1
+ec2-user 0.0 pts/1
+ec2-instance-connect:x:993:993::/home/ec2-instance-connect:/sbin/nologin
+stapunpriv:x:159:159:systemtap unprivileged user:/var/lib/stapunpriv:/sbin/nologin
+rpcuser:x:29:29:RPC Service User:/var/lib/nfs:/sbin/nologin
+tcpdump:x:72:72::/:/sbin/nologin
+ec2-user:x:1000:1000:EC2 Default User:/home/ec2-user:/bin/bash
+[ec2-user@ip-172-31-54-45 ~]$ cut -d ':' -f 3 output01
+USER %CPU TTY
+root 0.0 tty1
+root 0.0 ttyS0
+ec2-user 0.0 pts/1
+ec2-user 0.0 pts/1
+ec2-user 0.0 pts/1
+ec2-user 0.0 pts/1
+993
+159
+29
+72
+1000
+[ec2-user@ip-172-31-54-45 ~]$ cut -d ':' -f 6 output01
+
+
+sed # sed stand for stream editor
+it is used to search, find, replace , delete or modify text without opeing in and editor
+
+[ec2-user@ip-172-31-54-45 ~]$ sed 's/ec2-user/test-user/' sample
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root        1593  0.0  0.1 221360  1072 tty1     Ss+  11:29   0:00 /sbin/agetty -o -p -- \u --noclear - linux
+root        1594  0.0  0.1 221404  1076 ttyS0    Ss+  11:29   0:00 /sbin/agetty -o -p -- \u --keep-baud 115200,57600,38400,9600 - vt220
+test-user    2141  0.0  0.6 224796  5736 pts/1    Ss   11:45   0:00 -bash
+test-user    3659  0.0  0.3 223592  2840 pts/1    R+   12:34   0:00 ps -au
+
+ec2-user    3659  0.0  0.3 223592  2840 pts/1    R+   12:34   0:00 ps -au
+[ec2-user@ip-172-31-54-45 ~]$ sed -i 's/ec2-user/test-user/' sample
+[ec2-user@ip-172-31-54-45 ~]$ cat sample
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root        1593  0.0  0.1 221360  1072 tty1     Ss+  11:29   0:00 /sbin/agetty -o -p -- \u --noclear - linux
+root        1594  0.0  0.1 221404  1076 ttyS0    Ss+  11:29   0:00 /sbin/agetty -o -p -- \u --keep-baud 115200,57600,38400,9600 - vt220
+test-user    2141  0.0  0.6 224796  5736 pts/1    Ss   11:45   0:00 -bash
+test-user    3659  0.0  0.3 223592  2840 pts/1    R+   12:34   0:00 ps -au
+
+
+The sort command By default, the entire line is taken as a sort key: 
+•Lines that begin with a number will appear first. 
+•Lines that begin with an a appear before lines that begin with other letters.
+•Lines that begin in lowercase appear before lines that begin in uppercase.
+•-o outputs the result to a file (sort file.txt –o sortedfile.txtis like sort file.txt > sortedfile.txt)
+•-r sorts in reverser order
+•-n sorts numerically if the file contains numbers
+•-k sorts according to the kth column (if the file is formatted as a table )
+•-u removes duplicates
+•-c tells whether a file is already sorted
+
+
+The awk command
+•Is used to write small programs to transform data  
+•Defines variables
+•Uses string and arithmetic operators
+•Uses control flow and loops
+•Generates formatted reports
+•Syntax: Two ways to invoke awk–one with an explicit program, one with the program in a file–awk option –f program-file input-file–awkoption 'program' input-file
+•Options:– -F fs To specify a field separator (the default separator any number of spaces or tab)
+ 	 – -f source-file To specify a file that contains awkscript 
+ 	 – -v var=value To declare a variable

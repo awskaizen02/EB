@@ -1,0 +1,336 @@
+You will learn how to:
+	•Define a process in Linux
+	•Describe basic commands for process management
+	•Compare the at and cron commands for job scheduling
+	
+	
+•A program is a series of instructions given to a computer that tells which actions the computer should take.
+•Programs are usually one of two kinds:
+	System programs
+		A systemprogram has the following attributes:
+			•Primal computer functions
+			•Operating system commands 
+			•Usually do not interface with the computer user
+		
+		Utility programs are examples of system programs	
+			
+	Application program	
+		An applicationprogram has the following attributes: 
+			•Comprehensive program that performs a specific function
+			•Can be used by a user or another program
+
+	Word processors, database management, and games are examples of application programs			
+
+The followingare the two major differences between system and application programs: 
+	•A system program is a native computer function.
+	•An application program is added to the computer
+	
+When a command is run, the system searches the $PATH variable for the executable file for the program corresponding to the command. 
+When the executable is found, the system loads the file into memory, schedules running time for it on the processor, and assigns it a process ID number (PID).Most process administration is done by using this PID.	
+
+What is a process?
+	•Is a running program
+	•Is identified by process ID number (PID)
+	•Is viewed with multiple commands:
+		ps
+		pstree
+		
+When a process runs, it can cycle through various states:
+1.Start: The process is created.
+2.Ready: The process is waiting to be assigned processor time.
+3.Running: The process is in progress. 
+4.Waiting: The process is waiting for an event.
+5.Stopped: The process is finished running.	
+
+[ec2-user@ip-172-31-62-204 ~]$ ps
+    PID TTY          TIME CMD
+   1664 pts/0    00:00:00 bash
+   1686 pts/0    00:00:00 sleep
+  21752 pts/0    00:00:00 stress
+  21754 pts/0    00:06:08 stress
+  21755 pts/0    00:06:08 stress
+  
+[ec2-user@ip-172-31-62-204 ~]$ pstree
+systemd---2*[agetty]
+        +-amazon-ssm-agen---8*[{amazon-ssm-agen}]
+        +-atd
+        +-auditd---{auditd}
+        +-chronyd
+        +-dbus-broker-lau---dbus-broker
+        +-gssproxy---5*[{gssproxy}]
+        +-irqbalance---{irqbalance}
+        +-lsmd
+        +-sshd---sshd---sshd---bash---pstree
+        ¦                           +-sleep
+        ¦                           +-stress---2*[stress]
+        +-systemd---(sd-pam)
+        
+        
+
+What is a child process?
+Some services and applications are complex and require more than one process to provide more functionality. 
+These services spawn child process. 
+
+Child processes can also be known as sub processes. 
+Often, child processes inherit most of the attributes of the parent process
+
+
+What is the ps command?
+The ps (process status)command gives an overview of the current processes that will be running in your operating system (OS). 
+With in this overview, it displays information on the active process that includes the following:
+•Process ID (PID) 
+•Terminal type (TTY) that the user is using 
+•Time that the process has been running
+•Command (CMD), which is the name of the command that launched the process
+
+ps -e  show all processes in the system
+   -f	full-format lsiting
+   -ef  all processes in full format
+   aux	another common format showing CPU/memory usage
+   
+[ec2-user@ip-172-31-62-204 ~]$ ps aux
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.1  1.8 172428 17448 ?        Ss   10:29   0:00 /usr/lib/systemd
+
+user	# the user wo owns the process
+pid	# Process Id
+cpu	# % of cpu used by this process
+mem	# % of ram used by this process
+vsz	# virtual memory size (in KB) used by process
+rss	# resident set size - actual physical memory used (in kb)
+tty	# terminal associated with process
+stat	# process status 
+start	# start time/date of process
+time	# totcal cpu time the process has used
+command # the command or program that started the process
+
+STAT column process states
+
+R			RUNNING
+S			SLEEPING(idle, waiting for event)
+D			Uninterruptible sleep (i/o)
+T			stop
+Z			Zombie
+<			High priority
+N			low piority
+s			session leader
+I			Multithreaded
++			in foreground process group
+
+ps
+-e		List all current processes
+-b 		Use batch mode
+-fp <number>	List processes by PID
+
+
+•us value	-Time spent running processes in user space
+•sy value	-Time spent running kernel space processes
+•id value	-Idle time
+•wa value	-Time waiting for I/O to complete
+•hi value	-Time handling hardware problems
+•si value	-Time handling software problems
+•st value	-Time lost waiting for other CPU processes to complete
+
+
+8bit = 1bite
+
+1000b - 1kb
+1024b  - 1kib
+1000kb - 1mb
+1024kib - 1mib
+
+kb  =
+kib = 
+
+
+
+When this command is run:
+•It explicitly ends processes usually when the process fails to quit on its own
+	If a parent process is ended, it usually also ends the child processes.
+•A frequently used killcommands include the following:
+	-9 SIGKILL–Immediately stops the process with no graceful exit
+	-15 SIGTERM –Exits without immediately terminating
+	-19 SIGSTOP–Pauses the process and can use the command line
+	
+	
+What is the nice command?
+•It manages processes that are scheduled to be run at specific times on the CPU. 
+The nice command manages the schedule priority.
+	•The highest priority for the nice command is -20, and the lowest priority is 19 .
+
+Why would you use the nicecommand?
+It helps with running programs on a schedule with certain priorities. With nice, when a program is given a high priority, the kernel allows more CPU to process that request. 
+
+What is the renice command? 
+It adjusts the priority of a process.
+
+Why would you use the renice command?
+You would use this command when you need to adjust or modify the scheduling priority of a running process. 
+	
+•Jobs are processes that users start and manage that are identified by a job number. 
+	The jobs command will list the job process number with the following syntax:
+		?bg [job process number or name]to run in the background
+		?fg [job process number or name]to run in the foreground 
+	You use the jobs command to manage these processes	
+
+https://crontab.guru/#0_1_*_*_*
+
+What are the at and cron commands? 
+•The at command is useful when having to run a task only once at a specified time. 
+
+•The cron daemon is useful when running tasks on a regular basis at a specified time.
+
+Why would you use the ata nd cron commands?
+•You can schedule tasks with the at and cron commands. 
+
+Administrators can configure services or scripts to run automatically at specified times without having to be manually submitted. 
+
+There are also cron directories. These are precreated and prescheduled directories that administrators can use to store scripts that will run at specified times:
+•/etc/cron.daily
+•/etc/cron.hourly
+•/etc/cron.monthly
+•/etc/cron.weekly
+
+
+    3  sleep 1000 &
+    4  ps
+    5  top
+    6  ps
+    7  sudo yum install stress -y
+    8  stress --cpu 2 --timeout 600 &
+    9  ps
+   10  top
+   11  ps
+   12  pstree
+   13  ps
+   14  ps --help
+   15  ps
+   16  ps -ef
+   17  ps -ef | grep sshd
+   18  ps aux
+   19  ps aux | grep sshd
+   20  ps -ef
+   21  ps -ef | less
+   22  ps -e
+   23  ps -f
+   24  ps -fp 1664
+   25  ps L
+   26  ps -r
+   27  pid sshd
+   28  pidof sshd
+   29  top
+   30  top | grep sshd
+   31  top | less | grep sshd
+   32  clear
+   33  pidof sshd
+   34  ps -fp 1663
+   35  ps -fp 1646 1571
+   36  pidof ftp
+   37  top
+   38  pidof netns
+   39  top
+   40  pidof atd
+   41  top
+   42  ps -ef
+   43  pidof acpid
+   44  pstree
+   45  pstree 8
+   46  pstree 12
+   47  pstree 1
+   48  top
+   49  top --help
+   50  top -hv
+   51  top -b
+   52  top --help
+   53  top -n 10
+   54  stress --cp2 2 --timeout 600 &
+   55  sleep 1000 &
+   56  ps
+   57  ps -ef
+   58  top
+   59  clear
+   60  ps
+   61  kill --help
+   62  kill
+   63  ps
+   64  kill -9 26794
+   65  ps
+   66  kill -9 26796
+   67  ps
+   68  kill -9 26797
+   69  ps
+   70  top
+   71  sud yum install htop -y
+   72  sudo yum install htop -y
+   73  htop
+   74  top -o cpu
+   75  top -O cpu
+   76  clear
+   77  nice sleep 200 &
+   78  ps
+   79  tree | greep sleep
+   80  ps -aux | greep sleep
+   81  ps -aux | grep sleep
+   82  nice -n 10 sleep 200 &
+   83  ps -aux | grep sleep
+   84  top
+   85  top | less
+   86  clear
+   87  ps
+   
+    sleep 200 &
+       4  jobs
+       5  sleep 200 &
+       6  jobs
+       7  fg %1
+       8  bg %1
+       9  sleep 300 &
+      10  fg %1
+      11  clear
+      12  jobs
+      13  fg %2
+      14  fg %3
+      15  jobs
+      16  bg %1
+      17  sleep 100 &
+      18  jobs
+      19  sleep 100 &
+      20  bg %1
+      21  jobs
+      22  fg %n
+      23  fg %1
+      24  bg %2
+      25  bg %5
+      26  bg %3
+      27  bg %1
+      28  bg %2
+      29  sudo tiedatectl set-timezone asia/kolkata
+      30  date
+      31  timedatectl
+      32  sudo timedatectl set-timezone asia/kolkata
+      33  sudo timedatectl set-timezone Asia/Kolkata
+      34  date
+      35  sudo yum install at -y
+      36  sudo systemctl status at
+      37  sudo systemctl status atd
+      38  date
+      39  at 5:35 PM
+      40  at
+      41  at now +5 minutes
+      42  atq
+      43  ls
+      44  cat sample.txt
+      45  crontab -e
+      46  sudo yum install cronie -y
+      47  sudo systemctl start cond
+      48  sudo systemctl start crond
+      49  sudo systemctl status crond
+      50  crontab -l
+      51  ls
+      52  crontab -e
+      53  crontab -l
+      54  ls /var/
+      55  ls /var/spool/
+      56  cd /var/spool/
+      57  ls -R at cron
+   58  sudo ls -R at cron
