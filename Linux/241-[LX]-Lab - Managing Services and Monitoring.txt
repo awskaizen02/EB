@@ -1,0 +1,223 @@
+You will learn how to:
+	•Explain common commands that are used for managing services on Linux
+	•Explain common commands that are used for monitoring services on Linux
+	
+•The following is the syntax of the systemctl command: 
+systemctl <subcommand> <service name>.
+
+•The following are common troubleshooting tasks if services aren't working correctly:
+•Restart after any configuration change.
+•Restart when troubleshooting.
+•The systemctl command has many subcommands, including status, start, stop, restart, enable, and disable.
+•Services provide functionality such as networking, remote administration, and security	
+
+
+http
+
+sudo yum install http
+
+sudo systemctl status httpd
+
+
+[ec2-user@ip-172-31-6-102 ~]$ systemctl list-unit-files 
+[ec2-user@ip-172-31-6-102 ~]$ systemctl list-unit-files | grep httpd
+
+[ec2-user@ip-172-31-6-102 ~]$ sudo yum install httpd -y
+
+[ec2-user@ip-172-31-6-102 ~]$ sudo systemctl status httpd
+? httpd.service - The Apache HTTP Server
+     Loaded: loaded (/usr/lib/systemd/system/httpd.service; disabled; preset: disa>
+     Active: inactive (dead)
+       Docs: man:httpd.service(8)
+lines 1-4/4 (END)
+
+[ec2-user@ip-172-31-6-102 ~]$ curl localhost
+curl: (7) Failed to connect to localhost port 80 after 0 ms: Could not connect to server
+[ec2-user@ip-172-31-6-102 ~]$ sudo systemctl start httpd
+[ec2-user@ip-172-31-6-102 ~]$ sudo systemctl status httpd
+? httpd.service - The Apache HTTP Server
+     Loaded: loaded (/usr/lib/systemd/system/httpd.service; disabled; preset: disa>
+     Active: active (running) since Wed 2025-10-29 09:25:02 UTC; 2s ago
+       Docs: man:httpd.service(8)
+   Main PID: 25428 (httpd)
+   
+   
+[ec2-user@ip-172-31-6-102 ~]$ sudo systemctl stop httpd
+
+[ec2-user@ip-172-31-6-102 ~]$ sudo systemctl status httpd
+? httpd.service - The Apache HTTP Server
+     Loaded: loaded (/usr/lib/systemd/system/httpd.service; disabled; preset: disa>
+     Active: inactive (dead)
+       Docs: man:httpd.service(8)   
+
+[ec2-user@ip-172-31-6-102 ~]$ sudo systemctl start httpd
+[ec2-user@ip-172-31-6-102 ~]$ sudo systemctl status httpd
+? httpd.service - The Apache HTTP Server
+     Loaded: loaded (/usr/lib/systemd/system/httpd.service; disabled; preset: disa>
+     Active: active (running) since Wed 2025-10-29 09:25:02 UTC; 2s ago
+       Docs: man:httpd.service(8)
+   Main PID: 25428 (httpd)
+   
+[ec2-user@ip-172-31-6-102 ~]$ sudo init 6
+
+[ec2-user@ip-172-31-6-102 ~]$ sudo systemctl status httpd
+? httpd.service - The Apache HTTP Server
+     Loaded: loaded (/usr/lib/systemd/system/httpd.service; disabled; preset: disa>
+     Active: inactive (dead)
+       Docs: man:httpd.service(8)  
+
+[ec2-user@ip-172-31-6-102 ~]$ sudo systemctl enable httpd
+
+Created symlink /etc/systemd/system/multi-user.target.wants/httpd.service ? /usr/lib/systemd/system/httpd.service.
+[ec2-user@ip-172-31-6-102 ~]$ sudo systemctl status httpd
+? httpd.service - The Apache HTTP Server
+     Loaded: loaded (/usr/lib/systemd/system/httpd.service; enabled; preset: disab>
+     Active: inactive (dead)
+       Docs: man:httpd.service(8)
+
+
+[ec2-user@ip-172-31-6-102 ~]$ sudo systemctl start httpd
+[ec2-user@ip-172-31-6-102 ~]$ sudo systemctl status httpd
+? httpd.service - The Apache HTTP Server
+     Loaded: loaded (/usr/lib/systemd/system/httpd.service; enabled; preset: disab>
+     Active: active (running) since Wed 2025-10-29 09:29:18 UTC; 3s ago
+       Docs: man:httpd.service(8)
+   Main PID: 1805 (httpd)
+     Status: "Started, listening on: port 80"
+      Tasks: 177 (limit: 1053)
+     Memory: 18.1M
+     
+[ec2-user@ip-172-31-6-102 ~]$ sudo init 6     
+     
+[ec2-user@ip-172-31-6-102 ~]$ sudo systemctl status httpd
+? httpd.service - The Apache HTTP Server
+     Loaded: loaded (/usr/lib/systemd/system/httpd.service; enabled; preset: disab>
+     Active: active (running) since Wed 2025-10-29 09:30:09 UTC; 1min 2s ago
+       Docs: man:httpd.service(8)     
+
+[ec2-user@ip-172-31-6-102 ~]$ systemctl 
+
+[ec2-user@ip-172-31-6-102 ~]$ systemctl list-units --type=service       
+
+[ec2-user@ip-172-31-6-102 ~]$ systemctl list-units --type=service --state=active
+  UNIT                                                  LOAD   ACTIVE SUB     DESC>
+  acpid.service                                         loaded active running ACPI>
+  amazon-ssm-agent.service                              loaded active running amaz>
+  atd.service                                           loaded active running Defe>       
+       
+[ec2-user@ip-172-31-6-102 ~]$ systemctl list-unit-files | grep ssh
+sshd-keygen@.service                   disabled        disabled
+sshd.service                           enabled         enabled
+sshd@.service                          static          -
+sssd-ssh.service                       indirect        disabled
+sshd.socket                            disabled        disabled
+sssd-ssh.socket                        disabled        disabled
+sshd-keygen.target                     static          -
+
+[ec2-user@ip-172-31-6-102 ~]$ systemctl list-unit-files | grep httpd
+httpd.service                          enabled         disabled
+httpd@.service                         disabled        disabled
+httpd.socket                           disabled        disabled       
+
+
+Command			Description
+lscpu			List CPU information
+lshw			List hardware
+du			Check file and directory sizes
+df 			Display disk size and free space
+fdisk			List and modify partitions on the hard drive
+vmstat			Indicate use of virtual memory
+free			Indicate use of physical memory
+top			Display system’s processes and resource usage
+uptime			Indicate the amount of time that the system has been up, number of users, and central processing unit (CPU) wait time
+
+ec2-user@ip-172-31-6-102 ~]$ lscpu
+Architecture:                x86_64
+  CPU op-mode(s):            32-bit, 64-bit
+  Address sizes:             46 bits physical, 48 bits virtual
+  Byte Order:                Little Endian
+CPU(s):                      2
+  On-line CPU(s) list:       0,1
+Vendor ID:                   GenuineIntel
+  Model name:                Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+    CPU family:              6
+    
+[ec2-user@ip-172-31-6-102 ~]$ lshw
+WARNING: you should run this program as super-user.
+ip-172-31-6-102.us-west-2.compute.internal
+    description: Computer
+    width: 64 bits
+    capabilities: smp vsyscall32
+  *-core
+       description: Motherboard    
+       
+[ec2-user@ip-172-31-6-102 ~]$ df
+Filesystem       1K-blocks    Used Available Use% Mounted on
+devtmpfs              4096       0      4096   0% /dev
+tmpfs               463276       0    463276   0% /dev/shm
+tmpfs               185312     436    184876   1% /run
+/dev/nvme0n1p1     8310764 1669996   6640768  21% /
+tmpfs               463276       0    463276   0% /tmp
+/dev/nvme0n1p128     10202    1314      8888  13% /boot/efi
+tmpfs                92652       0     92652   0% /run/user/1000
+
+
+[ec2-user@ip-172-31-6-102 ~]$ vmstat
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 0  0      0 383192   2168 314428    0    0   167    27   53  106  0  0 99  0  0
+
+
+[ec2-user@ip-172-31-6-102 ~]$ free
+               total        used        free      shared  buff/cache   available
+Mem:          926552      226708      383192         812      316652      526096
+Swap:              0           0           0
+
+[ec2-user@ip-172-31-6-102 ~]$ top
+
+[ec2-user@ip-172-31-6-102 ~]$ uptime
+ 09:43:42 up 13 min,  1 user,  load average: 0.01, 0.01, 0.00      
+ 
+ AWS CloudWatch monitors the health and performance of your AWS resources and applications.
+•It offers monitoring of Amazon Elastic Compute Cloud (Amazon EC2) instances, such as CPU usage, disk reads, and writes.
+ •You can create alarms. For example, when CPU usage exceeds a certain threshold, a notification is sent through Amazon Simple Notification Service (Amazon SNS)
+ 
+ 
+ KC - Managing Services 
+ 
+ LAB - Managing Services - Monitoring
+ 
+ Task 2: Check the Status of the httpd Service
+
+[ec2-user@ip-10-0-10-84 ~]$ sudo systemctl status httpd.service
+? httpd.service - The Apache HTTP Server
+   Loaded: loaded (/usr/lib/systemd/system/httpd.service; disabled; vendor preset: disabled)
+   Active: inactive (dead)
+     Docs: man:httpd.service(8)
+
+[ec2-user@ip-10-0-10-84 ~]$ sudo systemctl status httpd
+? httpd.service - The Apache HTTP Server
+   Loaded: loaded (/usr/lib/systemd/system/httpd.service; disabled; vendor preset: disabled)
+   Active: inactive (dead)
+     Docs: man:httpd.service(8)
+[ec2-user@ip-10-0-10-84 ~]$ sudo systemctl start httpd.service
+
+[ec2-user@ip-10-0-10-84 ~]$ sudo systemctl status httpd
+? httpd.service - The Apache HTTP Server
+   Loaded: loaded (/usr/lib/systemd/system/httpd.service; disabled; vendor preset: disabled)
+   Active: active (running) since Wed 2025-10-29 10:12:04 UTC; 3s ago
+     Docs: man:httpd.service(8)
+     
+[ec2-user@ip-10-0-10-84 ~]$ curl localhost
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+[ec2-user@ip-10-0-10-84 ~]$ sudo systemctl stop httpd.service
+[ec2-user@ip-10-0-10-84 ~]$ curl localhost
+curl: (7) Failed to connect to localhost port 80 after 0 ms: Couldn't connect to server
+
+
+Task 3: Monitoring a Linux EC2 instance
+
+[ec2-user@ip-10-0-10-84 ~]$ ls
+CompanyA  stress.sh
+[ec2-user@ip-10-0-10-84 ~]$ ./stress.sh & top
