@@ -1,0 +1,633 @@
+You will learn how to:
+	•Describe features of the Bash shell
+	•Explain how to display shell variables
+	•Explain how environment variables are used
+	•Describe the value of the alias command
+	
+	
+What is a shell? 	
+	•A shell accepts and interprets commands.
+	•A shell is an environment in which commands, programs, and shell scripts are run.
+	•There are many types of Linux shells available. Bash is one of them.
+	
+The primary purpose of a shell is to allow the user to interact with the computer operating system. 
+It has two different functions. 
+	One is a program and the other is a command interpreter. 
+As a program shell, it provides the interface for utilities and programs. 
+As a command interpreter, a shell accepts and interprets the commands you enter into the commandline interface (CLI) or 	terminal.
+
+What is the Bourne Again Shell (Bash)? 
+•Bash is the default shell in Linux.
+•It offers an efficient environment for interacting with the operating system and scripting
+		
+Bash is a programming language for running commands. Bash is the default shell in Linux operating systems. 
+It is widely used, so some familiarity with Bash is expected in many systems or development roles
+
+what Bash shell variables are, how to name them,what the rules are for writing them, and how to assign a value to them.
+	In a shell, a variable is used to store values.
+	A variable value can be a string, a number, or special characters; by default, variables are strings.
+	
+	name=value
+	
+In a shell, a variable is used to store values. 
+Variables can be a name, a number, or special characters; by default, variables are strings. 
+Variables are character strings to which you can assign a value; a value can be assigned as a number, text, file name, device, or other data type. 
+Variables are a symbolic label for a portion of memory used to assign values and read and manipulate contents.
+Scripts or other commands can call shell variables. 
+The values that these shell variables represent are then substituted into the script or command	
+
+By convention and as a good practice, the name of a variable that a user has created is in lowercase. 
+Environment (system) variable names are capitalized. Also, there is no space before or after the equal sign
+
+There are rules for defining or creating variables in the shell.
+When defining a variable, the variable name must be prefixed with the dollar ($) symbol.
+The variable must contain no spaces or special characters within the variable name. 
+A variable name can contain only letters (a to z or A to Z), numbers (0 to 9), or the underscore character ( _), and they are usually capitalized (e.g. VARIABLE).
+
+
+Naming variables in Bash can be difficult, but if you name variables properly, it is useful.  
+
+Good variable names are crucial; they assist in making sense of what the variable is used for and the readability of the variable. 
+It is good practice to be consistent in your naming pattern. 
+
+restart_student=
+restart_us_cohort_1=
+restart_spring_student
+
+Unhelpful, confusing, or vague variable names can contribute to the disconnect between a variable and its value.
+The variable names on this slide are examples of a few good and a few bad variable names.
+
+student=
+us_cohort=
+spring!=
+
+batch_time=Afternoon
+
+Variables are assigned by using the = operator. The value of the variable is located to the right of the = operator.  
+
+ restart_student=Li Juan
+ 
+Variables can be a name, a number, or special characters; by default, all variables are treated as strings, even if a variable is assigned to a number. There is no space between the variable name and the value
+
+
+
+[ec2-user@ip-172-31-16-21 ~]$ echo $USER
+ec2-user
+[ec2-user@ip-172-31-16-21 ~]$ echo $HOME
+/home/ec2-user
+[ec2-user@ip-172-31-16-21 ~]$ echo $SHELL
+/bin/bash
+
+[ec2-user@ip-172-31-16-21 ~]$ time=2.30pm
+[ec2-user@ip-172-31-16-21 ~]$ echo $time
+2.30pm
+[ec2-user@ip-172-31-16-21 ~]$ echo aws class start by $time
+aws class start by 2.30pm
+
+
+In a shell, environment variables are the same as shell variables. 
+Structurally, these variables are no different from each other. Both use the key-value pair, and they are separated by the equal (=) sign.
+
+Environment variables are system wide, and all child processes and shells in herit them. With environment variables, you can pass information about the current operating environment to a program running. 
+Finally, applications and daemons reference environment variables as needed.
+
+
+$HOME		Defines the user's home directory
+$PATH		Indicates the location of the commands
+$SHELL		Defines the login shell type
+$USER		Contains the user's system name
+
+At the command prompt, enter the echo command and an environment variable from the following list:
+•echo $HOME
+•echo $SHELL
+•echo $USER
+•echo $PATH
+
+The envcommand is used to view environment variables
+
+If you run the env command without any options, it will display the variables in your current environment. 
+With options, you can use this command to view, set, or remove environment variables
+
+
+XDG_VTNR		Specifies the virtual terminal number
+XDG_SESSONS_ID		Specifies the session 
+IDHOSTNAME		Specifies the name of the computer
+SHELL			Specifies the shell path
+TERM			Defines terminal handling
+
+The env command is a shell command for Linux. You use this command to print a list of environment variables or run another utility in an altered environment
+
+[ec2-user@ip-172-31-16-21 ~]$ env
+SHELL=/bin/bash
+HISTCONTROL=ignoredups
+SYSTEMD_COLORS=false
+HISTSIZE=1000
+HOSTNAME=ip-172-31-16-21.us-west-2.compute.internal
+PWD=/home/ec2-user
+LOGNAME=ec2-user
+XDG_SESSION_TYPE=tty
+MOTD_SHOWN=pam
+HOME=/home/ec2-user
+LANG=C.UTF-8
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=01;37;41:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=01;36:*.au=01;36:*.flac=01;36:*.m4a=01;36:*.mid=01;36:*.midi=01;36:*.mka=01;36:*.mp3=01;36:*.mpc=01;36:*.ogg=01;36:*.ra=01;36:*.wav=01;36:*.oga=01;36:*.opus=01;36:*.spx=01;36:*.xspf=01;36:
+SSH_CONNECTION=122.164.9.129 55880 172.31.16.21 22
+XDG_SESSION_CLASS=user
+SELINUX_ROLE_REQUESTED=
+TERM=xterm-256color
+LESSOPEN=||/usr/bin/lesspipe.sh %s
+USER=ec2-user
+SELINUX_USE_CURRENT_RANGE=
+SHLVL=1
+XDG_SESSION_ID=1
+XDG_RUNTIME_DIR=/run/user/1000
+S_COLORS=auto
+SSH_CLIENT=122.164.9.129 55880 22
+which_declare=declare -f
+PATH=/home/ec2-user/.local/bin:/home/ec2-user/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+SELINUX_LEVEL_REQUESTED=
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+MAIL=/var/spool/mail/ec2-user
+SSH_TTY=/dev/pts/0
+BASH_FUNC_which%%=() {  ( alias;
+ eval ${which_declare} ) | /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot "$@"
+}
+_=/usr/bin/env
+[ec2-user@ip-172-31-16-21 ~]$
+
+
+[ec2-user@ip-172-31-16-21 ~]$ env GREETING="HELLO WORLD" bash -c 'echo $GREETING'
+HELLO WORLD
+
+[ec2-user@ip-172-31-16-21 ~]$ env time=2:30PM Course="AWS" job="with placement support" bash -c 'echo $Course start on $time once completed the course and $job'
+AWS start on 2:30PM once completed the course and with placement support
+
+
+During the initialization process of Bash environment files, two different initialization shell files are invoked.
+
+The /etc/profile file contains system-wide environment configurations and startup scripts for login setup. 
+
+The command line prompt is set within this file. All configurations that you want to apply to all system users’ environments should be added to this file.
+When you log in, Bash reads the /etc/profile instructions. 
+The /etc/profile file usually sets the shell variables PATH, USER, HOSTNAME, etc.
+The /etc/bashrc file contains system-wide functions and aliases, including other configurations that apply to all system users
+
+
+By using aliases,you can define new commands by substituting a long command with a short one. 
+Aliases can be set temporarily in the current shell, but it is more common to set them in the user's .bashrc file so that they are permanent. 
+In the example, ll is often substituted or aliased to ls –l.
+Extra: In many distributions, you can create an alias of destructive commands —such as rm, cp, and mv —with the -i interactive option
+
+
+[ec2-user@ip-172-31-16-21 ~]$ alias hi='history'
+[ec2-user@ip-172-31-16-21 ~]$ hi
+    1  clear
+    2  echo $USER
+    3  echo $HOME
+    4  echo $SHELL
+    5  time=2.30pm
+    6  echo $time
+    7  echo aws class start by $time
+    8  env
+    9  env GREETING="HELLO WORLD" bash -c 'echo$GREETING'
+   10  env GREETING="HELLO WORLD" bash -c 'echo $GREETING'
+   11  env -i bash
+   
+   [ec2-user@ip-172-31-16-21 ~]$ unalias hi
+   [ec2-user@ip-172-31-16-21 ~]$ hi
+-bash: hi: command not found
+
+
+The .bashrc file is stored in the home directory of each user. 
+As mentioned earlier,the .bashrc file is used to store configurations specific to the user. When creating an alias, remember that after you create it, the alias isa pplied to the .bashrc file. 
+
+
+[ec2-user@ip-172-31-16-21 ~]$ vi .bashrc
+alias ji='history'
+alias jk='ls -ld '
+
+[ec2-user@ip-172-31-16-21 ~]$ source ~/.bashrc
+[ec2-user@ip-172-31-16-21 ~]$ jk /
+dr-xr-xr-x. 18 root root 237 Oct 23 00:07 /
+[ec2-user@ip-172-31-16-21 ~]$ jk /etc/
+drwxr-xr-x. 76 root root 16384 Oct 30 09:36 /etc/
+[ec2-user@ip-172-31-16-21 ~]$ ls -ld /etc/
+drwxr-xr-x. 76 root root 16384 Oct 30 09:36 /etc/
+
+Lab-
+
+Task 2: Create an alias for a backup operation
+
+
+to create a backup # tar -cvzf name.tar fodler file
+
+[ec2-user@ip-10-0-10-46 ~]$ alias backup='tar -cvzf '
+[ec2-user@ip-10-0-10-46 ~]$ backup backup_companyA.tar.gz CompanyA
+CompanyA/
+CompanyA/Management/
+CompanyA/Management/Sections.csv
+CompanyA/Management/Promotions.csv
+CompanyA/Employees/
+CompanyA/Employees/Schedules.csv
+CompanyA/Finance/
+CompanyA/Finance/Salary.csv
+CompanyA/HR/
+CompanyA/HR/Managers.csv
+CompanyA/HR/Assessments.csv
+CompanyA/IA/
+CompanyA/SharedFolders/
+CompanyA/bin/
+CompanyA/bin/hello.sh
+[ec2-user@ip-10-0-10-46 ~]$ ls
+backup_companyA.tar.gz  CompanyA
+
+Task 3: Explore and update the PATH environment variable
+
+[ec2-user@ip-10-0-10-46 ~]$ cd /home/ec2-user/CompanyA/bin
+[ec2-user@ip-10-0-10-46 bin]$ ls
+hello.sh
+[ec2-user@ip-10-0-10-46 bin]$ cat hello.sh
+#!/bin/bash
+
+echo "Hello $USER"
+[ec2-user@ip-10-0-10-46 bin]$ ./hello.sh
+Hello ec2-user
+
+
+
+[ec2-user@ip-10-0-10-46 CompanyA]$ PATH=$PATH:/home/ec2-user/CompanyA/bin
+
+[ec2-user@ip-10-0-10-46 CompanyA]$ echo $PATH
+/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/home/ec2-user/.local/bin:/home/ec2-user/bin:/home/ec2-user/CompanyA/bin
+
+[ec2-user@ip-10-0-10-46 CompanyA]$ hello.sh
+Hello ec2-user
+
+--------------------------------------------------------------------------------------
+Bash Shell Scripting
+
+
+You will learn how to:
+•Describe common tasks that are accomplished through shell scripts
+•Describe basic commands that are frequently included in shell scripts
+•Describe basic logical control statements that are frequently included in shell scripts
+•Run a shell script
+
+What are scripts?
+	•Scripts are text files of commands and related data.
+	•When the text file is processed, the commands are run.
+	•Scripts can be set as scheduled tasks by using cron.
+	•Automation allows scripts to run more quickly than if they are run manually.
+	•Scripts are consistent due to automation removing the potential for manual errors. 
+	
+[ec2-user@ip-172-31-16-21 ~]$ vi 1.sh
+[ec2-user@ip-172-31-16-21 ~]$ ls -l 1.sh
+-rw-r--r--. 1 ec2-user ec2-user 38 Oct 30 11:19 1.sh
+[ec2-user@ip-172-31-16-21 ~]$ chmod +x 1.sh
+[ec2-user@ip-172-31-16-21 ~]$ ls -l 1.sh
+-rwxr-xr-x. 1 ec2-user ec2-user 38 Oct 30 11:19 1.sh
+[ec2-user@ip-172-31-16-21 ~]$ ./1.sh
+1.sh
+total 4
+-rwxr-xr-x. 1 ec2-user ec2-user 38 Oct 30 11:19 1.sh
+Thu Oct 30 11:20:04 UTC 2025
+               Local time: Thu 2025-10-30 11:20:04 UTC
+           Universal time: Thu 2025-10-30 11:20:04 UTC
+                 RTC time: Thu 2025-10-30 11:20:03
+                Time zone: n/a (UTC, +0000)
+System clock synchronized: yes
+              NTP service: active
+          RTC in local TZ: no	
+
+
+What are scripts?Common script tasks:
+•Creating backup jobs
+•Archivinglog files
+•Configuring systems and services
+•Simplifying repetitive task
+•Automating tasks          
+
+
+#!/bin/bash
+# Script to backup the home directory
+tar -cf backup-home.tar /home/ec2-user/etc ~/1.sh
+
+echo “backup job complete at `date`”
+
+
+The process of creating a script follows these steps:
+	1.Create the script using a text editor.
+	2.Set the script permissions to run.  [x]
+	3.Use ./to run the script
+	
+	
+in AWS ec2 userdata
+
+#!/bin/bash
+yum install httpd -y
+service httpd start
+chkconfig httpd on
+echo "WC to Webserver" > /var/www/html/index.html
+
+
+
+#!/bin/bash
+sudo yum install httpd -y
+sudo service httpd start
+sudo chkconfig httpd on
+cd /var/www/html
+sudo  touch index.html
+sudo chmod 775 index.html
+echo "WC to Webserver" > index.html
+
+
+
+•Bash ignores lines that are preceded with #.
+•The # character is used to define comments or notes to the user that might provide instructions or options.
+
+#!/bin/bash  => If the first line does not define the interpreter, the operating system will find one, usually the one defined for the current shell
+
+sudo yum install httpd -y
+# this file to install httpd
+
+The second echo command runs and displays a message.
+
+
+#!/bin/sh
+#!/bin/bash
+
+•#!is referred to as a shebang.
+•The first line defines the interpreter to use (it gives the path and name of the interpreter).
+•Scripts must begin with the directive for which shell will run them.
+•The location and shell can be different.
+•Each shell has its own syntax, which tells the system what syntax to expect
+
+
+•Use # to define comments, including the purpose of the script, author information, special directives for the script, examples, and others
+
+
+•Some administrators create a script template, which contains all the relevant information and sections.
+•The template might include the following:
+	Title
+	Purpose
+	Author’s name and contact information
+	Special instructions or examples
+	
+Declare a Bash variable
+	•Declare (create) your own variables.
+	•Use these custom variables in scripts
+
+[ec2-user@ip-172-31-16-21 ~]$ vi 3.sh
+[ec2-user@ip-172-31-16-21 ~]$ chmod u+x 3.sh
+
+	#!/bin/bash
+	course="AWS"
+	echo i am doing $course
+	
+[ec2-user@ip-172-31-16-21 ~]$ ./3.sh
+i am doing AWS	
+
+Command				Description
+------------------------------------------------------------------------
+echo				Displays information on the console
+read				Reads a user input
+subStr				Gets the substring of a string
++				Adds two numbers or combine strings
+file				Opens a file
+mkdir				Creates a directory
+cp				Copies files
+mv				Moves or renames files
+chmod				Sets permissions on files
+rm				Deletes files, folders,etc.
+ls				Lists directories
+
+
+You can use all the shell commands that you saw earlier in the course, such as grep, touch, and redirectors 
+( >, >>, <, << ).
+You can also use the shell script to create programs using statements such as if, else if, for, while, case, and create functions using the function keyword
+
+1.For this demonstration, create a file and enter the following text:
+#!/bin/bash
+echo "What is your name?“
+read name echo "Hello $name”
+
+2.As soon as you finish, save the file and run the following command (for this example, the file is named getname.sh):chmod +x getname.sh
+
+3.Run the script by enteringthe following (for this example, the file is named getname.sh):./getname.sh
+
+#!/bin/bash
+sum=$(($1 + $2))
+echo $1 + $2 equals $sum
+
+#!/bin/bash		-> shebang and which shell command need to run
+sum=$(($1+$2))  	-> $1 $2 positional parameters, (()) is used for arithmetic expresion in bash
+echo $sum		-> print the result to the screen
+
+
+
+
+•Arguments are values that you want the script to act on.
+•Arguments are passed to the script by including them in a script invocation command separated by spaces.
+•For example, $1 is the first argument, and $2 is the second argument
+
+
+A conditional statement runs a command or block of commands only if a specified condition is satisfied. 
+script named delete.sh copies a file named file1 from the current directory to the /tmp directory. 
+If the copy command is successful, the script deletes the original file from the current directory.
+
+Notice how the script uses the special variable $? to test whether the copy command was successful or not. 
+This variable contains a value that represents the exit status code of the last command that was run. 
+If the command was successful, the return value is 0; otherwise, the return value is 1.
+
+
+#!/bin/bash
+
+# Copy file1 from the current directory to /tmp.
+
+cp file1 /tmp
+
+# Delete file1 from the current directory
+# if the copy was successful.
+
+if [ $? -eq 0 ]  # $?  stores the exit status of the last execute command 0 sucess 1 fail
+then
+   rm file1
+fi
+
+--------------------------------
+
+#!/bin/bash
+echo "Enter a Number: "
+read num
+
+if [ $num -gt 10 ]
+then
+   echo "The number is greater than 10"
+fi   
+
+---------------------
+less than 40  fail
+40 to 60 above pass third class
+61 to 89 second class
+90 to 100 first class
+
+
+#!/bin/bash
+echo "Enter your marsk: "
+read mark
+
+if [ $mark -lt 40 ]
+
+then
+    echo "Fail"
+elif [ $mark -ge 40 ] && [ $mark -le 60 ]
+
+then
+    echo "Pass - Third Class"
+
+elif [ $mark -ge 61 ] && [ $mark -le 89 ]
+
+then
+   echo "Pass - Second Class"
+elif [ $mark -ge 90 ] && [ $mark -le 100 ]
+then
+   echo "Pass - First Class"
+
+else
+   echo "Invalid Marks entered"
+fi
+
+------------
+•If the first command succeeds with an exit code of 0 (success), then the subsequent command runs.
+•This is the simplest conditional statement.
+•An if statement must end with the fi keyword
+
+if <condition>
+then
+   <command>
+fi
+
+Or 
+if writing everything in one line:
+
+if <condition>; then <command>; fi
+
+Note that the semicolon (;) is required to separate multiple commands on the same line.
+Indentation is used for better readability but is not required
+
+if <condition>
+then
+   <command>
+else
+   <other command>
+fi
+
+--------------
+
+if <condition>
+then
+   <command>
+elif 
+  <other condition>
+then
+  <other command>
+else
+  <default  command>
+fi
+
+
+You can embed if-elif-else statements.
+•You can access all local objects of its immediately enclosing function and also of any function or functions that enclose that function.
+•Nesting is theoretically possible to unlimited depth
+
+Numeric comparision:
+----------------------
+-eq		equal to
+-ne		not equal to
+-gt		greater than
+-lt		less than
+-ge		greater than or equal to
+-le		less than or equal to 
+
+
+#!/bin/bash
+
+mun=80
+
+if test $num -gt 40
+then
+    echo "pass"
+else
+    echo "fail"
+fi    
+
+
+---
+
+nun=80
+
+if [ $num -gt 40]
+then
+    echo "pass"
+else
+    echo "fail"
+fi    
+
+
+
+
+
+
+string comparisons:
+----------------------
+=		equal to
+!=		not equal to
+-z		string is empty
+-n		string is not empty
+
+#!/bin/bash
+
+name="tim"
+
+if test "$name" = "tim"
+then
+    echo "Hello Tim"
+else
+    echo "unknown user"
+fi   
+
+file test
+--------------------------------------
+-f		file exists and is a regular file
+-d		directory exists
+-r		file is readable
+-w		file is writable
+-x		file is executable
+-s		file is not empty
+
+#!/bin/bash
+
+file="1.sh"
+
+if test -f "$file"
+then
+    echo "$file exists"
+else
+    echo "$file not found"
+fi    
+
+
+•<		is less than (withindouble parentheses): (("$a" < "$b"))•
+•<=		is less than or equal to (within double parentheses): (("$a" <= "$b"))
+•>		is greater than (within double parentheses): (("$a" > "$b"))
+•>=		is greater than or equal to (within double parentheses)
+
+In these examples, you can see that brackets or double parentheses surround the condition.
+•(( are for numerical comparison:
+•(( $a < $b )) is equivalent to [ $a –lt $b ]
+•You will also see some conditions using double brackets:
+•if [[ $a –lt $b ]]    
+•This is basically a notation equivalent to a simple bracket with enhanced features,but this goes beyond this course.
+•Note also that “ are not mandatory: if [ "$a" -lt "$b" ] is equivalent to if [ $a -lt $b ]
+
+
+page 25
