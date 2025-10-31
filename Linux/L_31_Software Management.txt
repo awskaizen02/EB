@@ -1,0 +1,99 @@
+•Describe how package managers support software management
+
+The approach for managing software varies depending on the Linux distribution type. 
+Features such as the software package format and the utility tools used to install, update, and delete packages are different depending on the source of the distribution.
+
+For a distribution based on Red Hat Linux, software packages are managed using the Red Hat Package Manager (RPM) tool and stored in files with an .rpm extension. 
+A utility called YUM (Yellow Dog Updater, Modified) is commonly used as a front end to RPM. 
+It includes additional features, such as the ability to track package dependencies and configure automatic updates. Note that the Amazon Linux 2 operating system uses this approach for software management.
+
+For a Debian distribution and its derivatives, the dpkg package management tool is used to manage packages that have a .deb file name extension. 
+These distributions also typically provide higher-level tools such as Advanced Package Tool (APT) as a front end to dpkg.
+You can also install or update software using a package provided in source code format. 
+To do so, you compile the source code using a compiler, such as an open-source GNU Compiler Collection (GCC) compiler. A GCC provides compilers for various programming languages, including C, C++, Objective-C, and Go. 
+After the package is compiled, you can install it
+
+
+Package managers maintain the software through its lifecycle
+	•Install
+	•Update
+	•Inventory
+	•Uninstall
+
+Packages contain everything that is needed to install the software
+	•Precompiled code
+	•Documentation
+	•Installation instructions
+	
+Software in a Linux system is maintained using a package manager such as YUM or RPM.
+A package manager installs, updates, and deletes software that is bundled in a package. 
+A package contains everything that is needed to install the software, including the precompiled code, documentation, and installation instructions. 
+The Red Hat and Debian software management methods rely on repositories of software packages	
+
+
+Repositories are servers that contain software packages.
+•Repositories can be:
+	–Online at a vendor site, which the vendor manages
+	–On an internal server, which your administrators manage
+	–On the local hard disk drive of the system
+
+•Repositories available to a package manager are typically defined in a configuration file.
+•The following are examples of Amazon Linux 2 repositories managed by AWS:
+	–amzn2-core
+	–amzn2extra-docker
+	
+Software packages are retrieved from a repository that can be hosted in an online or local system. When you use a package manager, you define the location of the repositories that contain the software packages that the manager can access. 
+This repository information is typically defined in a package manager configuration file. For example, for the YUM package manager, the repository information is stored in the /etc/yum.conf file.
+
+AWS provides online repositories from which you can download software packages. 
+For example, for Amazon Linux 2, the following repositories are available:
+
+•amzn2-core: The main repository containing the latest software packages for the core operatingsystemcomponents
+•amzn2extra-docker: The repository containing extra software packages specifically for Docker-related components	
+
+wget and curl are commonly used utilities for retrieving files from other servers. 
+
+wget:
+	•Can do a recursive download
+	•Supports HTTP, HTTPS, and FTP protocols
+	•Performs retries over an unreliable connection
+
+curl:	
+	•Downloads a single resource only
+	•Supports HTTP, HTTPS, FTP, and many other additional protocols (for example: FTPS and FILE)
+	•Runs on more platforms than wge
+	
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install	
+
+
+  cd companyA/
+    4  pwd
+    5  sudo yum -y check-update
+    6  sudo yum update --security
+    7  sudo yum -y upgrade
+    8  sudo yum install httpd -y
+    9  sudo yum history list
+   10  sudo yum install wet -y
+   11  sudo yum install wget net-tool -y
+   12  sudo yum install wget net-tools -y
+   13  sudo yum history list
+   14  sudo yum install wget -y
+   15  sudo yum install net-tools -y
+   16  sudo yum history list
+   17  sudo yum history info 1
+   18  sudo yum -y history undo 1
+   19  sudo yum history list
+   20  pythion
+   21  python  --version
+   22  pip3 --version
+   23  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+   24  ls
+   25  unzip awscliv2.zip
+   26  ls
+   27  sudo ./aws/install
+   
+   41  aws configure
+   42  aws ec2 describe-instances     --filters "Name=instance-state-name,Values=running"     --query "Reservations[*].Instances[*].{InstanceId:InstanceId,InstanceType:InstanceType,PublicIpAddress:PublicIpAddress}"     --output table
+   43  aws ec2 describe-instance-attribute --instance-id i-067ce1e75ca5852ae --attribute instanceType
