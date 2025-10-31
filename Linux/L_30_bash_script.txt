@@ -629,5 +629,371 @@ In these examples, you can see that brackets or double parentheses surround the 
 •This is basically a notation equivalent to a simple bracket with enhanced features,but this goes beyond this course.
 •Note also that “ are not mandatory: if [ "$a" -lt "$b" ] is equivalent to if [ $a -lt $b ]
 
+Integer comparison operators examples
 
-page 25
+#!/bin/bash
+
+a=10
+b=20
+
+if [ $a -eq $b ]
+then
+   echo "$a is equal to $b"
+
+elif [ $a -lt $b ]
+then
+   echo "$a is less than to $b"
+
+else
+   echo "$a is grater than to $b"
+
+fi   
+
+
+-----------------
+a=10
+b=20
+
+if (( $a == $b ))
+then
+   echo "$a is equal to $b"
+
+elif (( $a > $b ))
+then
+   echo "$a is grater than to $b"
+
+else
+   echo "$a is less than to $b"
+
+fi   
+
+
+[] / [[ ]] for string and file condition checks
+(( )) when doing arithmetic (no $ required before variables inside)
+
+Double quotes are not mandatory: if [ "$a" -lt "$b" ] is equivalent to if [ $a -lt $b ]•
+The semicolon (;) is mandatory only if the clauses of the if statement are written in the same line: 
+if [ $a -lt $b ]; then ...; else ...; fi
+
+
+
+String comparison operations 
+
+
+#!/bin/bash
+# Compares letters $1 and $2 
+
+if [ “$1” = “$2” ]
+
+then 
+   echo letters are the same
+
+elif [ $1 \< $2 ]
+
+then
+    echo the first letter is before the second letter
+
+else
+    echo the second letter is before the first letter
+
+fi
+
+
+-------------------
+Sections of a script can be configured to repeat themselves.
+•The loop can end:
+	–After a specific number of repeats (for statement)
+	–Or until a condition is met (untilstatement)
+	–Or while a condition is true (whilestatement)
+•Looping extends the power and complexity of scripts
+
+
+Loops the command a specified number of times
+•Bracketed by do and done
+
+#!/bin/bash
+# The for loop
+
+for x in 1 2 3 4 5 a b c d
+do
+echo "the value is $x"
+done
+
+
+The for statement To loop a command a specific number of times, use the for statement.
+
+#!/bin/bash
+# The while loop
+
+counter=3
+
+while [ $counter -le 5 ]
+do
+  echo  $counter
+  ((counter++))
+done
+
+-----------
+#!/bin/bash
+# The while loop
+
+counter=3
+
+while [ $counter -le 5 ]
+do
+  echo  $counter
+  ((counter++))
+  
+  if [ $counter -eq $1 ]
+  then
+     break
+  fi   
+done
+
+•Continues running the script as long as the specified condition is true
+•Bracketed by whileand done
+
+----------------
+•Similar to the while statement
+•Runs code until a condition becomes true
+•Bracketed by until and done
+
+#!/bin/bash
+# The until loop
+counter=1
+until [ $counter -gt 10 ]
+do
+     echo  $counter
+     ((counter++))
+done
+echo “loop exited”
+echo “counter equals $counter”
+
+
+----
+
+#!/bin/bash
+counter=1
+
+until [ $counter -gt 10 ]   # loop run until condition become true
+do
+   echo "Couter is: $counter"  # Displays current counter
+   ((counter++))               # increments counter
+   
+   if [ $counter -eq $1 ]      # checks if counter equals user argument
+   then
+      break			# exits loop early
+   fi  
+done   
+
+----
+
+#!/bin/bash
+# The continue statement
+counter=1
+
+while [ $counter -le 10 ]
+do
+  echo $counter
+  if [ $counter = $1 ]
+  then
+  ((counter++))
+    
+    echo "Skipping the rest of the loop"
+  continue
+  fi
+((counter++))
+   echo "Completed all loop commands"
+
+done
+
+echo "loop exited"echo "counter equals $counter"
+
+
+The continue keyword terminates the current loop iteration and returns control back to the top of the loop. 
+In the example, the bottom part of the loop is skipped when the counter is equal to 7. 
+Specifically:•The parameter is 3.
+•The if condition is met when counter = 3.
+•When this condition is true, the continue statement is run, and the rest of the loop is skipped.
+•The loop keeps running until counter = 11 (original while condition)
+
+[ec2-user@ip-172-31-21-209 ~]$ ./8.sh 3
+1
+Completed all loop commands
+2
+Completed all loop commands
+3
+Skipping the rest of the loop
+4
+Completed all loop commands
+5
+Completed all loop commands
+6
+Completed all loop commands
+
+----------------
+The readcommand
+
+
+Reads user input into a variable in the script
+
+#!/bin/bash
+echo "Hello. What is your name?"
+read VARNAME
+echo "Glad to meet you, $VARNAME"
+
+
+Sets the user input as a variable
+
+Calls the variable and uses it as output
+
+--------
+
+•true and false commands are used with loops to manage their conditions.
+•These commands return predetermined exit status (either a status of true or a status of false).
+•A Boolean expression is an expression that produces avalue or true or false when it is evaluated
+
+
+#!/bin/bash
+while true			# create a continual (infinite) loop, beacuse true always exit 
+do
+	echo "Enter a number between 1 and 10:"
+	read  val		# reads the input from the user
+	if [ $val -eq 7 ]	# Boolean experssion - evaluates to true if user enter 7
+	then
+	  echo "You guessed right!"
+	  break			# Exits the loop when condition is met
+	fi
+	
+	echo  "Wrong guess!"	# Display if the guess isnot correct
+done
+
+
+
+•true and false commands are used with loops to manage their conditions.
+•These commands return predetermined exit status (either a status of trueor a status of false).
+•A Boolean expression is an expression that produces a value or true or false when it is evaluated.The true and false commands In the example, a while statement with a true condition creates a continual loop that asks the user to enter a value between 1 and 10. If the user does not enter the value of 7, the loop continues; otherwise, the loop exists using a breakstatement.
+
+
+--------------------
+
+•Causes script to stop running and exit to the shell.
+•Useful in testing
+•Can return code status. Each code can be associated to a specific error
+•For example:
+exit 0: The program has completed without any error.
+exit 1: The program has an error.
+exit n: The program has a specific error.
+•$?is a command to get the processing status of the last command that ran
+
+
+#!/bin/bash
+touch myfile.txt        # create a new empty file name myfile.txt
+		        # $?  stores the exit status of the previous comand    	
+if [ $? -eq 0 ]		# checks if the previous command succeeded (0)
+then
+   echo "File created"
+   exit 0
+else
+   echo  "Error encountered when creating the file"
+exit 1
+fi
+
+-----------------------------------
+
+Command substitution
+
+#!/bin/bash
+echo “Hello $USER!”
+echo "Today’s date is : `date`"
+echo "you directory location: `pwd`"
+
+
+•Commands can be placed in the syntax of other commands.
+•Commands are surrounded by backticks (`).
+•Commands can be useful in scripts
+
+
+variable Substitution      	$name
+Command Substitution	        $(date)
+Arithmetic substitution 	#((a+b))
+
+
+---------------------------
+
+Bash searches for executables by using the $PATH variable. 
+Bash assumes that any runnable command or script will be along that path.
+•If the script is not along the path, then precede the executable name with ./
+•For example, in your home directory, you wrote a script called myscript.sh and you want to run it:
+•myscript.sh fails because Bash does not check your home directory for executables.
+	•./myscript.sh succeeds.
+•Be sure to update the settings to persist beyond the current session
+.•Review: A user's profile is loaded from the files that are stored in the user's home directory:
+•/home/username/.bashrc
+•/home/username/.bash_history
+•/home/username/.bash_profile
+
+---------------------------
+LAB - Write a shell script
+
+[ec2-user@ip-10-0-10-231 ~]$ touch backup.sh
+
+[ec2-user@ip-10-0-10-231 ~]$ ls -l backup.sh
+-rw-rw-r-- 1 ec2-user ec2-user 0 Oct 31 11:27 backup.sh
+
+[ec2-user@ip-10-0-10-231 ~]$ vi backup.sh
+
+[ec2-user@ip-10-0-10-231 ~]$ chmod u+x backup.sh
+
+[ec2-user@ip-10-0-10-231 ~]$ ls -R backup
+backups/   backup.sh
+
+[ec2-user@ip-10-0-10-231 ~]$ ls -R backups/
+backups/:
+
+[ec2-user@ip-10-0-10-231 ~]$ ./backup.sh
+tar: Removing leading `/' from member names
+/home/ec2-user/CompanyA/
+/home/ec2-user/CompanyA/Management/
+/home/ec2-user/CompanyA/Management/Sections.csv
+/home/ec2-user/CompanyA/Management/Promotions.csv
+/home/ec2-user/CompanyA/Employees/
+/home/ec2-user/CompanyA/Employees/Schedules.csv
+/home/ec2-user/CompanyA/Finance/
+/home/ec2-user/CompanyA/Finance/Salary.csv
+/home/ec2-user/CompanyA/Finance/Hourly.csv
+/home/ec2-user/CompanyA/HR/
+/home/ec2-user/CompanyA/HR/Managers.csv
+/home/ec2-user/CompanyA/HR/Assessments.csv
+/home/ec2-user/CompanyA/IA/
+/home/ec2-user/CompanyA/SharedFolders/
+
+[ec2-user@ip-10-0-10-231 ~]$ ls -R backups/
+backups/:
+2025_10_31_11:32:51_11_32-backup-CompanyA.tar.gz
+
+[ec2-user@ip-10-0-10-231 ~]$ date
+Fri Oct 31 11:33:10 UTC 2025
+[ec2-user@ip-10-0-10-231 ~]$ ./backup.sh
+tar: Removing leading `/' from member names
+/home/ec2-user/CompanyA/
+/home/ec2-user/CompanyA/Management/
+/home/ec2-user/CompanyA/Management/Sections.csv
+/home/ec2-user/CompanyA/Management/Promotions.csv
+/home/ec2-user/CompanyA/Employees/
+/home/ec2-user/CompanyA/Employees/Schedules.csv
+/home/ec2-user/CompanyA/Finance/
+/home/ec2-user/CompanyA/Finance/Salary.csv
+/home/ec2-user/CompanyA/Finance/Hourly.csv
+/home/ec2-user/CompanyA/HR/
+/home/ec2-user/CompanyA/HR/Managers.csv
+/home/ec2-user/CompanyA/HR/Assessments.csv
+/home/ec2-user/CompanyA/IA/
+/home/ec2-user/CompanyA/SharedFolders/
+
+[ec2-user@ip-10-0-10-231 ~]$ ls -R backups/
+backups/:
+2025_10_31_11:32:51_11_32-backup-CompanyA.tar.gz
+2025_10_31_11:33:15_11_33-backup-CompanyA.tar.gz
+[ec2-user@ip-10-0-10-231 ~]$
+
