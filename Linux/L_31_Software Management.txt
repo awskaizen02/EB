@@ -97,3 +97,6 @@ sudo ./aws/install
    41  aws configure
    42  aws ec2 describe-instances     --filters "Name=instance-state-name,Values=running"     --query "Reservations[*].Instances[*].{InstanceId:InstanceId,InstanceType:InstanceType,PublicIpAddress:PublicIpAddress}"     --output table
    43  aws ec2 describe-instance-attribute --instance-id i-067ce1e75ca5852ae --attribute instanceType
+   
+   
+   

@@ -1,0 +1,246 @@
+
+
+You will learn how to:
+	•Define log files
+	•Use commands to read different types of messages in a log file 
+	•Recognize the benefits of log rotation
+	
+	
+What islogging?	
+•Logs keep records of events on the system, which helps with auditing.
+•The following are types of logs:
+	System logs (system startup information and system shutdown times)
+	Events logs (user login and logout events)
+	Applications logs (startup time, actions, and errors)
+	Services logs	
+	
+Logs are a record of what happened in the operating system or an application.
+They are particularly useful if an issue occurs. 
+Administrators, developers, and others can trace which application triggered an error, which user made a wrong action, or which outside host accessed the server	
+
+
+Security audits
+Service-level agreements (SLAs)
+Proactive troubleshooting
+Industry requirements
+
+Logging can help troubleshoot issues:
+What or who caused an error? Did anyone wrongfully access a file, a database, or a server?
+
+Logs are a key to security audits (gathering information about the system) and service-level agreements (troubleshooting must start within xhours after an issue occurs)
+
+
+sudo cat /var/log/httpd/error_logfile is the log file of the httpd, a web server service. 
+sudo cat /var/log/yum.log file lists programs that were installed or updated
+
+
+Severity Identification		Description
+0	EMERGENCY	 Logs messages when the system becomes unstable
+1	ALERT		Logs when immediate action is needed
+2	CRITICAL	Logs only messages for critical errors; the system may becomeunusable
+3	ERROR		Logs only messages that indicate non-critical error conditions or more seriousmessages
+4	WARN		Logs only messages that are warnings or more serious messages (usually the default log level on Linux distributions)
+5	NOTICE		Logs messages for normal events but of significant importance
+6	INFO		Logs all informational messages and more seriousmessages7DEBUGLogs all debug-level and 
+INFOmessages
+
+These logging levels are the logs that the Linux operating system offers.
+Some programs or libraries may offer fewer logging levels, such as debug, info, warning, and error, with a default logging level set to info.
+The logs of the current logging level and higher levels are displayed. 
+For example, when choosing WARN, level 4, the logs of NOTICE, INFO and DEBUG are also displayed.
+
+
+
+The grep command searches the given file for lines that containa match to the specified strings or words.
+•Add the grep command when you look for a specific string of text in logfiles.
+•grep is one of the most useful commands in Linux.
+•The following are examples:
+cat your log.log | grep ERROR
+tail -f yourlog.log | grep error
+sudo cat/tmp/log/secure | grep LOGIN > SharedFolders/logins.csv
+The following are some more details on these errors.
+•cat yourlog.log | grepERROR: searches for the ERROR message in the yourlog.log file and displays the matching lines of the file in the console (reads the content of the yourlog.log file and redirects it to the grep command that searches for the word ERROR).
+•tail -f yourlog.log | greperror: searches the word error in the last 10 lines of the yourlog.
+log file and displays the matching lines of the file in the console (reads the last 10 lines oftheyourlog.
+log file and redirects it to the grep command that searches for the word error; remember that without any additional option, tail reads the last 10 lines of a file).
+•sudo cat /var/log/secure | grep LOGIN >SharedFolders/logins.csv: searches the word LOGIN in the file /var/log/secure and writes the matching lines of the file in the file SharedFolders/logins.csv. 
+Sudo is required to access the /var/log/secure file.
+
+
+Where does Linux store log files?
+•Linux and applications normally store log files in the /var/log directory.
+•The /var directory is used to store files that might rapidly and unpredictably change in size
+
+
+Log			FileDescription
+/var/log/syslog		Stores systeminformation
+/var/log/secure		Stores authentication information for RedHat-derived distributions
+/var/log/kern		Stores Linux kernel information
+/var/log/boot.log	Stores startup messages
+/var/log/maillog	Stores mail messages
+/var/log/daemon.log	Storesinformation about running background services
+/var/log/auth.log	Stores authentication information for Debian-deriveddistributions
+/var/log/cron.log	Stores cron messages for scheduledtasks/var/log/httpdStores Apache information for Red Hat-deriveddistributions
+•/var/log/YUM: 		Stores YUM installer information for Red Hat-derived distributions
+•/var/log/apache2/access.log: Stores Apache authentication information for Debian-derived distributions
+•/var/log/lastlog: 		Stores information about successful logins to the host
+
+
+[root@ip-10-0-10-182 log]# lastlog -u ab01
+Username         Port     From             Latest
+ab01             pts/1    223.178.68.115   Sat Nov  1 09:58:57 +0000 2025
+[root@ip-10-0-10-182 log]# lastlog -u ab02
+Username         Port     From             Latest
+ab02                                       **Never logged in**
+[root@ip-10-0-10-182 log]# lastlog -u ab03
+Username         Port     From             Latest
+ab03             pts/2    223.178.68.115   Sat Nov  1 09:59:30 +0000 2025
+[root@ip-10-0-10-182 log]# lastlog -t 1
+Username         Port     From             Latest
+ec2-user         pts/0    223.178.68.115   Sat Nov  1 09:24:30 +0000 2025
+ab01             pts/1    223.178.68.115   Sat Nov  1 09:58:57 +0000 2025
+ab03             pts/2    223.178.68.115   Sat Nov  1 09:59:30 +0000 2025
+
+ec2-user@ip-10-0-10-182 companyA]$ sudo less /tmp/log/secure
+[ec2-user@ip-10-0-10-182 companyA]$ sudo lastlog
+Username         Port     From             Latest
+root                                       **Never logged in**
+bin                                        **Never logged in**
+daemon                                     **Never logged in**
+adm                                        **Never logged in**
+lp                                         **Never logged in**
+sync                                       **Never logged in**
+shutdown                                   **Never logged in**
+halt                                       **Never logged in**
+mail                                       **Never logged in**
+operator                                   **Never logged in**
+games                                      **Never logged in**
+ftp                                        **Never logged in**
+nobody                                     **Never logged in**
+systemd-network                            **Never logged in**
+dbus                                       **Never logged in**
+rpc                                        **Never logged in**
+libstoragemgmt                             **Never logged in**
+sshd                                       **Never logged in**
+rpcuser                                    **Never logged in**
+nfsnobody                                  **Never logged in**
+ec2-instance-connect                           **Never logged in**
+postfix                                    **Never logged in**
+rngd                                       **Never logged in**
+chrony                                     **Never logged in**
+tcpdump                                    **Never logged in**
+ec2-user         pts/0    223.178.68.115   Sat Nov  1 09:24:30 +0000 2025
+ljuan                                      **Never logged in**
+mmajor                                     **Never logged in**
+mjackson                                   **Never logged in**
+eowusu                                     **Never logged in**
+nwolf                                      **Never logged in**
+arosalez                                   **Never logged in**
+jdoe                                       **Never logged in**
+psantos                                    **Never logged in**
+smartinez                                  **Never logged in**
+ssarkar                                    **Never logged in**
+nginx                                      **Never logged in**
+ab01             pts/1    223.178.68.115   Sat Nov  1 09:58:57 +0000 2025
+ab02                                       **Never logged in**
+ab03             pts/2    223.178.68.115   Sat Nov  1 09:59:30 +0000 2025
+
+
+sudo vi /etc/yum.repos.d/nginx.repo
+    2  sudo yum-config-manager --enable nginx-mainline
+    3  sudo yum install nginx-1.25.3 -y
+    4  sudo yum list hisotry
+    5  sudo yum list hisotry info
+    6  sudo yum list history list
+    7  sudo yum history list
+    8  curl localhost
+    9  sudo service nginx start
+   10  curl localhost
+   11  cd /var
+   12  ls
+   13  cd log/
+   14  ls
+   15  ls nginx/
+   16  cat nginx/error.log
+   17  cat nginx/access.log
+   18  curl localhost
+   19  cat nginx/access.log
+   20  curl localhost
+   21  cat nginx/access.log
+   22  ls
+   23  cat messages
+   24  ls
+   25  ls audit/
+   26  cat audit/audit.log
+   27  clear
+   28  ls
+   29  cat dmesg
+   30  ls
+   31  cat yum.log
+   32  tail -5 nginx/access.log
+   33  head -5 nginx/access.log
+   34  less nginx/access.log
+   35  less nginx/access.log | grep curl
+   36  less nginx/access.log | grep curl > demo.log
+   37  cat demo.log
+   38  ls
+   39  cat lastlog
+   40  clear
+   41  sudo useradd ab01
+   42  sudo useradd ab02
+   43  sudo useradd ab03
+   44  sudo passwod ab01
+   45  demo
+   46  sudo password ab01
+   47  sudo passrd ab01
+   48  sudo passwd ab01
+   49  sudo passwd ab02
+   50  sudo passwd ab03
+   51  clear
+   52  sudo usermod -aG wheel ab01
+   53  sudo gpasswd -M ab02 ab03 ab04 wheel
+   54  sudo gpasswd -M ab02,ab03,ab04 wheel
+   55  sudo gpasswd -M ab02,ab03 wheel
+   56  sudo vi /etc/ssh/sshd_config
+   57  sudo service sshd restart
+   58  ls
+   
+   -----------------------
+script  Task 
+
+Creates 25 empty (0 KB) files. (Hint: Use the touch command.)
+The file names should be <yourName><number>, <yourName><number+1>, <yourName><number+2>, and so on.
+Design the script so that each time you run it, it creates the next batch of 25 files with increasing numbers starting with the last or maximum number that already exists.
+Do not hard code these numbers. You need to generate them by using automation
+
+#!/bin/bash
+name="tom"
+
+# find the highest existing number
+
+last_number=$(ls ${name}[0-9]* 2>/dev/null | grep -oE '[0-9]+$' | sort -n | tail -1)
+
+# ls ${name}[0-9]* lists existig files with yuor name prefix
+# grep -oE '[0-9]+$' extracts the numbers at the end of file names
+# sort -n | tail -1 find the masimum number
+
+
+# -z string test operator used to check if the variable is empty
+# if no files exist, it starts from 0
+
+if [ -z "$last_number" ]; then
+   last_number=0
+fi
+
+
+# calculate next batc; if trying to create multiple times
+
+start=$((last_number + 1))
+end=$((last_number + 25))
+
+for ((i=start; i<=end; i++))
+do
+   touch "${name}${i}"
+done
+
+
