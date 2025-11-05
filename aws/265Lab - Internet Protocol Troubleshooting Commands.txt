@@ -1,0 +1,106 @@
+
+[ec2-user@ip-10-0-10-29 ~]$ [ec2-user@ip-10-0-10-29 ~]$ netstat -tuln   //Show all listening ports
+Active Internet connections (only servers)
+
+[ec2-user@ip-10-0-10-29 ~]$ netstat -a		// Show all connections
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State 
+
+[ec2-user@ip-10-0-10-29 ~]$ sudo netstat -tulpn  //Show programs using ports
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State 
+
+[ec2-user@ip-10-0-10-29 ~]$ netstat -tn		// Show only TCP connections
+Active Internet connections (w/o servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State
+
+[ec2-user@ip-10-0-10-29 ~]$ netstat -un		// Show only UDP connections
+Active Internet connections (w/o servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State 
+
+
+[ec2-user@ip-10-0-10-29 ~]$ ss -tln		//Show listening TCP ports
+State   Recv-Q  Send-Q     Local Address:Port     Peer Address:Port  Process
+LISTEN  0       128              0.0.0.0:22            0.0.0.0:*
+LISTEN  0       100            127.0.0.1:25            0.0.0.0:*
+LISTEN  0       128              0.0.0.0:111           0.0.0.0:*
+LISTEN  0       128                 [::]:22               [::]:*
+LISTEN  0       128                 [::]:111              [::]:*
+LISTEN  0       128                    *:80                  *:*
+
+
+[ec2-user@ip-10-0-10-29 ~]$ ss -uln	//Show listening UDP ports
+State  Recv-Q Send-Q                   Local Address:Port   Peer Address:Port Process
+
+[ec2-user@ip-10-0-10-29 ~]$ sudo ss -tulpn  //Show process using each port
+Netid State  Recv-Q Send-Q                   Local Address:Port  Peer Address:Port                   Process
+
+[ec2-user@ip-10-0-10-29 ~]$ sudo ss -tulpn | grep :80 //Show connections to a specific port
+tcp   LISTEN 0      128                                  *:80              *:*    users:(("httpd",pid=2541,fd=4),("httpd",pid=2540,fd=4),("httpd",pid=2539,fd=4),("httpd",pid=2538,fd=4),("httpd",pid=2537,fd=4),("httpd",pid=2536,fd=4))
+
+[ec2-user@ip-10-0-10-29 ~]$ ss -ta	//  Show all established connections	
+State      Recv-Q Send-Q  Local Address:Port       Peer Address:Port  Process
+LISTEN     0      128           0.0.0.0:ssh             0.0.0.0:*
+LISTEN     0      100         127.0.0.1:smtp            0.0.0.0:*
+LISTEN     0      128           0.0.0.0:sunrpc          0.0.0.0:*
+ESTAB      0      36         10.0.10.29:ssh      122.164.13.184:63552
+FIN-WAIT-1 0      1          10.0.10.29:ssh       115.190.13.99:27072
+LISTEN     0      128              [::]:ssh                [::]:*
+LISTEN     0      128              [::]:sunrpc             [::]:*
+LISTEN     0      128                 *:http                  *:*
+
+[ec2-user@ip-10-0-10-29 ~]$ telnet localhost 80  // test http connection on localhost
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+^[
+HTTP/1.1 400 Bad Request
+Date: Wed, 05 Nov 2025 10:31:22 GMT
+Server: Apache/2.4.65 ()
+Content-Length: 226
+Connection: close
+Content-Type: text/html; charset=iso-8859-1
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>400 Bad Request</title>
+</head><body>
+<h1>Bad Request</h1>
+<p>Your browser sent a request that this server could not understand.<br />
+</p>
+</body></html>
+Connection closed by foreign host.
+[ec2-user@ip-10-0-10-29 ~]$ telnet localhost 456	// test 456 connection on localhost
+Trying 127.0.0.1...
+telnet: connect to address 127.0.0.1: Connection refused
+
+[ec2-user@ip-10-0-10-29 ~]$ ping -c 2 google.com   // to ping the ip address
+PING google.com (142.250.217.110) 56(84) bytes of data.
+64 bytes from sea09s30-in-f14.1e100.net (142.250.217.110): icmp_seq=1 ttl=117 time=5.95 ms
+64 bytes from sea09s30-in-f14.1e100.net (142.250.217.110): icmp_seq=2 ttl=117 time=5.97 ms
+
+--- google.com ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 5.950/5.962/5.975/0.078 ms
+[ec2-user@ip-10-0-10-29 ~]$ tracert google.com
+-bash: tracert: command not found
+
+[ec2-user@ip-10-0-10-29 ~]$ traceroute google.com   
+traceroute to google.com (142.250.217.110), 30 hops max, 60 byte packets
+ 1  240.1.228.14 (240.1.228.14)  6.535 ms 240.1.228.13 (240.1.228.13)  8.021 ms  6.596 ms
+ 2  242.16.82.235 (242.16.82.235)  6.658 ms 242.4.195.193 (242.4.195.193)  7.627 ms 242.16.82.233 (242.16.82.233)  6.427 ms
+ 3  * * *
+ 4  * * *
+ 5  * * *
+ 6  209.85.243.96 (209.85.243.96)  6.020 ms 142.251.229.76 (142.251.229.76)  6.958 ms  6.713 ms
+ 7  sea09s30-in-f14.1e100.net (142.250.217.110)  7.306 ms 192.178.105.146 (192.178.105.146)  20.488 ms 142.251.55.203 (142.251.55.203)  5.905 ms
+
+
+[ec2-user@ip-10-0-10-29 ~]$ traceroute 8.8.8.8
+traceroute to 8.8.8.8 (8.8.8.8), 30 hops max, 60 byte packets
+ 1  240.1.228.12 (240.1.228.12)  6.680 ms  8.012 ms  7.068 ms
+ 2  242.4.194.69 (242.4.194.69)  6.634 ms 242.16.83.105 (242.16.83.105)  6.496 ms 242.16.82.107 (242.16.82.107)  8.209 ms
+ 3  * * *
+ 4  99.83.116.81 (99.83.116.81)  7.643 ms 99.83.117.221 (99.83.117.221)  7.504 ms 99.83.116.81 (99.83.116.81)  5.964 ms
+ 5  * * *
+ 6  dns.google (8.8.8.8)  6.150 ms  6.052 ms  5.835 ms
