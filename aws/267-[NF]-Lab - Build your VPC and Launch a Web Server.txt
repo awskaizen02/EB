@@ -1,0 +1,37 @@
+267-[NF]-Lab - Build your VPC and Launch a Web Server
+
+
+Lab VPC = 10.0.0.0/16
+Public Subnet 1: 10.0.0.0/24
+Private Subnet 1: 10.0.1.0/24
+
+Public Route Table
+Private Route Table
+
+Public Subnet 2 : 10.0.2.0/24
+Private Subnet 2 :10.0.3.0/24
+
+Public Route Table
+0.0.0.0/0  igw Public Subnet 1
+		Public Subnet 2
+		
+
+Private Route Table		
+0.0.0.0/0  ngw	Private Subnet 1
+		Private Subne  2
+		
+		
+Web Security Group
+Enable HTTP access
+HTTP 0.0.0.0/0 Permit web requests
+
+user data
+
+#!/bin/bash
+dnf upgrade -y
+dnf install -y httpd wget php-fpm php-mysqli php-json php php-devel
+dnf install mariadb105-server
+systemctl start httpd
+systemctl enable httpd
+wget https://aws-tc-largeobjects.s3.us-west-2.amazonaws.com/CUR-TF-100-RESTRT-1/267-lab-NF-build-vpc-web-server/s3/lab-app.zip
+unzip lab-app.zip -d /var/www/html/
