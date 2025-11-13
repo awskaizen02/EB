@@ -1,0 +1,341 @@
+python:
+	Python Programming
+	
+Python is a free, easy-to-learn, general-purpose programming language.
+
+
+The interpreter enables fast exploratory programming. 
+Dynamic typing makes it easy to write quick scripts. 
+Python syntax is simple when it is compared to other languages.
+Python can support object-oriented, structural, and functional programming styles. 
+	
+Another reason to use Python is that it works across platforms.
+It works on macOS, Linux, Microsoft Windows, and other platforms.
+Though Bash scripts can be powerful, they mostly run on GNU/Linux	
+
+Python can be written in any text editor if you have the interpreter also installed. 
+Many developers use special programs that are called integrated development environments (IDEs). 
+IDEs help with finding syntax and exception errors.
+Some examples of programs that are used to write Python code include
+
+	Python(x,y)
+	PyCharm
+	Vim
+	Eclipse
+	Notepad++
+	Spyder
+	Microsoft Visual Studio Code
+
+Integrated development environment
+The following core capabilities are associated with IDEs:
+	•Syntax highlighting –Highlights keywords within the programming language
+	•Code completion –Similar to automatic completion for natural languages on modern cellular phones
+	•Debugging –Enables line-by-line inspection of the code while it is running with breakpoint capabilities
+	•Version control –Integrates popular version control systems, such as git and subversion
+
+•Declaration of functions, classes, and imports have similar color.
+•Comments are colored green.
+•All syntax highlighting is customizable
+
+•Functions are portrayed differently in a selection.
+•Functions include arguments that are available
+•Step through code line by line.
+•Inspect variables as you step.
+•Change values as you inspect
+
+After you finish writing an application in Python, you can:
+	•Run the application from the command line: $python myPythonapp.py
+	•Run it from inside the IDE However, what if you must run your code or application? 
+	For example:
+			1.Make it available to users around the world
+			2.Handle millions of users
+			
+AWS Lambda:
+	•Upload your code to AWS Lambda.
+	•Set up your code to trigger from an event, such as a user who is visiting your webpage.
+	•Lambda runs your code only when it is triggered, and it uses only the compute resources that are needed.
+	•You pay only for the compute time that you use.
+	•Multiple languages are supported	
+	
+Shell scripting commands are run directly from the command line of an operating system. 
+They are available on any machine and on any operating system without the needto install new software.
+Different environments require different syntax or types of shell scripting,such as Bashand Zshell	
+
+•Shell scripting can be a powerful tool for system administration and command-line work, but it can be challenging when you want to use more complicated data structures. 
+
+•For example: Python can perform some actions—such as creating an HTTP server—in a single line. 
+However, it could require many lines of code to do the same action in Bash.
+•Python has many external libraries and resources. It is a complete programming language.
+
+
+-------------------------
+Python uses indentation and spacing to group blocks of code together.
+	•If you get runtime errors, check your spacing first.
+	•Next, check your indentation for any missing punctuation, such as colons. 
+Python is also case sensitive. Capitalization matters
+
+Identifiers
+In Python, identifieris the name for entities like class, functions, and variables. 
+It helps differentiate one entity from another entity.
+When you name objects in Python, you must observe some rules:
+	An identifier cannot start with a digit. 1variableis invalid, but variable1 is valid.
+	Keywords cannot be used as identifiers.
+	You cannot use special symbols like !, @, #, $, and % in your identifiers.
+	Identifiers can be any length.
+
+
+The extension .py is a script file extension that is used in Python.
+Files with the .py extension can be created in any text editor, but they need a Python interpreter to be run
+
+
+•A function tells the computer to do a specific task.
+•Functions have a name and are invoked by adding parentheses after the name.
+•Many functions take arguments, which are information that the function uses to do its specific task.
+•One useful function is the print function.
+•You can write your own functions. 
+•Python also has native functions (such as print) that are already built in
+
+
+The text editor that you will use is Vim (Vi improved).
+•To open it on the command line, enter vim <file name> or vim
+•Vim opens in normal mode. To write to Vim, enter i (the i stands for insert)
+•To get back to normal mode, press ESC
+•When you are in normal mode, you can save and quit, or continue editing
+•To save a file, enter :w <file name> or :w(the wstands for write)
+•To close Vim, enter :q(the qstands for quit)
+•To save and close, enter :wq
+
+vi hello.py
+
+# this is sample pyhon script
+print("Hello, World!!")
+
+'''
+yous vi with file name to open the file
+press i to insert content into the file
+press esc and :wq to save the file
+'''
+
+
+
+•Comments are notes to yourself and to other developers.
+•Comments describe the contents of a program and how it works so that a person who reviews the source code can understand it.
+•Use the pound (#) symbol to start writing a comment.
+•By starting a line of text with #, you tell the interpreter not to run this line as code.
+•use ''' / """ to comment multiple lines
+
+-----
+Data types determine what kind of data is stored in an object. 
+Python stores the type of an object with the object. 
+When the operation is performed, it checks whether that operation makes sense for that object. 
+(This technique is called dynamic typing.)
+Example: Some functions or methods in Python expect a certain data type. 
+You cannot pass a string into a function that is expecting a float
+
+Text Type:	str
+Numeric Types:	int, float, complex
+Sequence Types:	list, tuple, range
+Mapping Type:	dict
+Set Types:	set, frozenset
+Boolean Type:	bool
+Binary Types:	bytes, bytearray, memoryview
+None Type:	NoneType
+
+Strings
+----------:
+	Strings in python are surrounded by either single quotation marks, or double quotation marks.
+	
+	'hello' is the same as "hello". "45","100", "99.9"
+	
+There are three numeric types in Python:
+
+Numeric Types:-
+---------------
+	int
+	float
+	complex	
+	
+Int:-
+	Int, or integer, is a whole number, positive or negative, without decimals, of unlimited length.	
+Float:-
+	Float, or "floating point number" is a number, positive or negative, containing one or more decimals.
+Complex:-
+	Complex numbers are written with a "j" as the imaginary part
+	
+Sequence Types:-	
+---------------
+	list, 
+	tuple, 
+	range
+List:-	
+	Lists are used to store multiple items in a single variable.
+	Lists are created using square brackets []	
+	List items are ordered, changeable, and allow duplicate values.
+	List items are indexed, the first item has index [0], the second item has index [1]
+
+Tuple:-
+	Tuples are used to store multiple items in a single variable.
+	A tuple is a collection which is ordered and unchangeable.
+	Tuples are written with round brackets. ()
+	Tuple items are ordered, unchangeable, and allow duplicate values.
+	Tuple items are indexed, the first item has index [0], the second item has index [1]
+
+Set:-
+	Sets are used to store multiple items in a single variable.
+	A set is a collection which is unordered, unchangeable*, and unindexed.	
+	* Note: Set items are unchangeable, but you can remove items and add new items.
+	Set items are unordered, unchangeable, and do not allow duplicate values.
+	
+Mapping Type:-
+-------------
+
+Dictionary:
+
+	Dictionaries are used to store data values in key:value pairs.
+	A dictionary is a collection which is ordered*, changeable and do not allow duplicates.
+	As of Python version 3.7, dictionaries are ordered. In Python 3.6 and earlier, dictionaries are unordered
+	Dictionary items are ordered, changeable, and do not allow duplicates.
+	Dictionary items are presented in key:value pairs, and can be referred to by using the key name
+	Dictionaries are changeable, meaning that we can change, add or remove items after the dictionary has been created.
+	
+
+Set Types:-
+-------------
+Set
+	Sets are used to store multiple items in a single variable.
+	A set is a collection which is unordered, unchangeable*, and unindexed.
+	* Note: Set items are unchangeable, but you can remove items and add new items.
+	Sets are written with curly brackets. {}
+	Note: Sets are unordered, so you cannot be sure in which order the items will appear.
+	Set items are unordered, unchangeable, and do not allow duplicate values.
+	Unordered means that the items in a set do not have a defined order.
+	Set items can appear in a different order every time you use them, and cannot be referred to by index or key.
+	Set items are unchangeable, meaning that we cannot change the items after the set has been created.
+
+	
+Boolean Type:-
+-------------
+	In programming you often need to know if an expression is True or False.
+	You can evaluate any expression in Python, and get one of two answers, True or False.
+	When you compare two values, the expression is evaluated and Python returns the Boolean answer
+	
+Data types: 
+Mutable vers us immutable 
+
+Immutable 
+	•Integers, floats, complex
+	•Strings
+	•Tuples
+	•Frozen sets
+Mutable	
+	•List 
+	•Set
+	•Dictionary
+	•Byte array
+-------------------------------------------------------------------------------	
+	
+print("Hello")
+print('Hello')
+
+print('It\'s alright')
+
+a = "tim"
+print(a)
+print(type(a))
+
+a = 1
+print(a)
+print(type(a))
+
+a = 1.5
+print(a)
+print(type(a))
+
+
+a = 1j
+print(a)
+print(type(a))	
+
+a = "Hello, World!"
+print(a[1])
+
+mylist = ["apple", "banana", "cherry",1,1.5,"100"]
+print(mylist)
+print(type(mylist))
+
+
+thislist = ["apple", "banana", "cherry", "apple", "cherry"]
+print(thislist)
+
+print(len(thislist))
+
+list1 = ["apple", "banana", "cherry", "orange", "kiwi", "melon", "mango"]
+list2 = [1, 5, 7, 9, 3]
+list3 = [True, False, False]
+
+print(list1[0])
+print(list1[-1])
+print(list1[0:3])
+print(list1[3:])
+
+print(type(list1))
+print(type(list2))
+print(type(list3))    
+
+thislist = ["apple", "banana", "cherry", "orange", "kiwi", "mango"]
+thislist[1:3] = ["blackcurrant", "watermelon"]
+print(thislist)
+
+
+thislist = ["apple", "banana", "cherry"]
+thislist.insert(2, "watermelon")
+print(thislist)
+
+thislist = ["apple", "banana", "cherry"]
+thislist.append("orange")
+print(thislist)
+
+thislist = ["apple", "banana", "cherry"]
+thislist.remove("banana")
+print(thislist)
+-------------------------------------------------------------------------------
+a =1.5
+print(type(a))
+b= int(a)
+print(type(b))
+
+thistuple = ("apple", "banana", "cherry")
+print(thistuple)
+print(len(thistuple))
+
+thistuple = ("apple",)
+print(type(thistuple))
+
+#NOT a tuple
+thistuple = ("apple")
+print(type(thistuple))
+
+tuple1 = ("apple", "banana", "cherry")
+tuple2 = (1, 5, 7, 9, 3)
+tuple3 = (True, False, False)
+print(type(tuple1))
+print(type(tuple2))
+print(type(tuple3))
+
+tuple1 = ("abc", 34, True, 40, "male")
+print(tuple1[1])
+print(tuple1[-1])
+print(tuple1[2:5])
+print(tuple1[2:])
+print(tuple1[0:3])
+
+x = ("apple", "banana", "cherry")
+y = list(x)
+y[1] = "kiwi"
+x = tuple(y)
+
+print(type(x))
+print(type(y))
+
+print(x)
+print(y)
