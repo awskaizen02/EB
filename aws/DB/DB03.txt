@@ -1,0 +1,468 @@
+
+Built-in functions Some common functions include 
+
+aggregate functions, 
+conversion functions, 
+date functions, 
+string functions, 
+mathematical functions, 
+control flow
+window functions
+
+Built-in functions:-
+
+	The CURRENT_DATE() function returns the current date as a value in ‘YYYY-MM-DD’ format.
+	
+---------------	
+CREATE TABLE employees (
+    emp_id INT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    salary DECIMAL(10,2),
+    hire_date DATE,
+    department VARCHAR(50),
+    age INT
+);
+
+
+INSERT INTO employees VALUES
+(1, 'John', 'Doe', 55000.50, '2020-05-10', 'IT', 28),
+(2, 'Asha', 'Kumar', 72000.00, '2018-11-03', 'HR', 35),
+(3, 'Ravi', 'Singh', 45000.75, '2022-01-17', 'IT', 25),
+(4, 'Meena', 'Sharma', 88000.20, '2019-03-28', 'Finance', 40),
+(5, 'David', 'Lee', 60000.00, '2021-07-15', 'Finance', 30);
+
+---------------------------------
+aggregate functions:
+
+
+AVG		•Returns the average of a set
+		•Can be used to find the average population for cities within a specified country
+COUNT		•Returns the number of items in a set
+		•Can be used to find the total number of cities listed within a specified country
+MAX		•Returns the maximum value in a set
+		•Can be used to find the city with the greatest number or the highest population
+MIN		•Returns the minimum value in a set
+		•Can be used to find the city with the smallest number or the lowest population
+SUM		•Returns the total of all values in a set
+		•Can be used to find the total population for all of the cities that are listed for a specified country
+
+
+	select count(*) as total_employes from employees
+	select avg(salary) as avg_salary from employees
+	select max(salary) as max_salary from employees
+	select min(salary) as min_salary from employees
+
+	select department, sum(salary) as Total_salary
+	from employees
+	group by department	
+	
+	
+---------------------------------
+conversion functions
+
+	select first_name, CAST(salary as INT) as salary_int
+	from employees
+	
+	select emp_id, CONVERT(varchar(10), hire_date,120) as hire_date_string
+	from employees
+	
+	# varchar (10) target data type(string of upto 10 characters)
+	# hire_date --> soruce like date/dateime
+	# 120       --> style code for formatting date/time 
+	
+	
+	select convert(DATE, '2025-11-19') as converted_date
+
+---------------------------------
+date functions
+	
+
+
+---------------------------------
+String functions:-
+
+
+SELECT UPPER(first_name), LOWER(last_name) FROM employees
+
+SELECT CONCAT(first_name,' ', last_name) Full_name FROM employees
+
+SELECT Len(CONCAT(first_name,' ', last_name)) len_Full_name   FROM employees
+
+
+SELECT 
+	 CONCAT(first_name,' ', last_name) Full_name,
+	Len(CONCAT(first_name,' ', last_name)) len_Full_name   FROM employees
+
+
+select substring(first_name, 1,3) as short_name from employees
+
+
+Which functions remove leading and trailing spaceson strings?
+TRIM
+
+What is an aggregate function?
+built-in-functions that performs a calcultaion on multiple rows and returns one single result
+
+What are five common aggregate functions?
+
+	AVG,sum,min,max,count
+
+---------------------------------
+
+Organizing data by using SQL
+	•Sorting is the practice of organizing the sequence of the data returned by a query so that the data can be analyzed effectively.
+	•Structured query language (SQL) statements use the ORDER BY clause to sort query output in a specified order.
+	•Query output can be sorted in either ascending or descending order.
+	•SQL statements use the GROUP BY clause to combine query output into groups.
+	•SQL statements use the HAVING clause to apply filter conditions to aggregated group data
+---------------------------------
+
+select emp_id, first_name,salary
+from employees
+order by salary asc
+
+
+
+select department, sum(salary) as total_salary
+from employees
+group by department
+
+
+select department, count(*) as num_emp
+from employees
+group by department
+
+where filters before grouping
+having filters after grouping
+you must use HAVING  when filtering aggregated data
+
+
+select department, sum(salary) as tot_salary
+from employees
+group by department
+having sum(salary) > 100000
+
+
+
+select department, count(*) as num_emp
+from employees
+group by department
+having count(*) >= 2
+
+
+
+
+select department, count(*)as num_emp ,avg(salary)as avg_salary 
+from employees
+group by department
+having avg(salary) > 50000
+order by avg_salary desc
+
+
+
+------------------------------------
+
+Retrieving Data from Multiple Tables
+
+Set operators are used to combine the results of multiple queries into a single result set. 
+You can use different tables to compare or unite the results into one result set. 
+Queries that contain set operations are referred to as compound queries.
+The table lists the common set operations and their description.
+
+
+UNION		Used to combine two or more result sets into a single set (without duplicates)
+UNION ALL	Used to combine two or more result sets into a single set(including duplicates)
+INTERSECT	Used to combine two result sets and return the data that is common in both of the result sets
+MINUS		Used to combine two result sets and return the data from the first result set that is not present in the second result set
+
+
+--Table-1
+CREATE TABLE employees_2024 (
+    emp_id INT,
+    name VARCHAR(50),
+    department VARCHAR(50)
+);
+
+INSERT INTO employees_2024 VALUES
+(1, 'John', 'IT'),
+(2, 'Asha', 'HR'),
+(3, 'Ravi', 'Finance'),
+(4, 'Meena', 'IT'),
+(5, 'David', 'Marketing');
+
+---
+
+--Table-2
+CREATE TABLE employees_2025 (
+    emp_id INT,
+    name VARCHAR(50),
+    department VARCHAR(50)
+);
+
+INSERT INTO employees_2025 VALUES
+(3, 'Ravi', 'Finance'),         -- common employee
+(4, 'Meena', 'IT'),             -- common employee
+(6, 'Priya', 'IT'),
+(7, 'Arun', 'Marketing'),
+(8, 'Sana', 'HR');
+
+
+
+select * from employees_2025
+union
+select * from employees_2024
+
+
+select * from employees_2025
+union all
+select * from employees_2024
+
+
+
+select * from employees_2025
+INTERSECT
+select * from employees_2024
+
+
+
+select * from employees_2025
+except
+select * from employees_2024
+
+
+
+---
+JOIN clauses 
+	defined JOIN clauses (inner, left, right, and full) are used to combine rows from two or more tables. 
+	There are four types of JOIN clauses
+	
+•Inner joins return the rows that match in both tables.
+•Left joins return the rows that match in both tables and the rows from the left table that do not have a match.
+•Right joins return the rows that match in both tables and rows from the right table that do not have a match.
+•Full joins return the rows that match in both tables and the rows from the left and right tables that do not have a match	
+
+
+CREATE TABLE departments (
+    dept_id INT PRIMARY KEY,
+    dept_name VARCHAR(50)
+);
+
+INSERT INTO departments VALUES
+(1, 'IT'),
+(2, 'HR'),
+(3, 'Finance'),
+(4, 'Marketing');
+
+
+CREATE TABLE employees (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50),
+    dept_id INT,
+    salary INT
+);
+
+INSERT INTO employees VALUES
+(101, 'John', 1, 55000),
+(102, 'Asha', 2, 48000),
+(103, 'Ravi', 1, 60000),
+(104, 'Meena', 3, 75000),
+(105, 'David', NULL, 50000),
+(106, 'Sana', 5, 62000);
+---
+Innerjoin:
+
+select e.emp_name,d.dept_name
+from employees e
+INNER JOIN departments d
+on e.dept_id = d.dept_id
+
+emp_name	dept_name
+John		IT
+Asha		HR
+Ravi		IT
+Meena		Finance
+
+---
+
+select e.emp_name,d.dept_name
+from employees e
+left JOIN departments d
+on e.dept_id = d.dept_id
+
+emp_name	dept_name
+John	IT
+Asha	HR
+Ravi	IT
+Meena	Finance
+David	NULL
+Sana	NULL
+
+---
+select e.emp_name,d.dept_name
+from employees e
+right JOIN departments d
+on e.dept_id = d.dept_id
+
+John	IT
+Ravi	IT
+Asha	HR
+Meena	Finance
+NULL	Marketing
+
+---
+select e.emp_name,d.dept_name
+from employees e
+FULL OUTER JOIN departments d
+on e.dept_id = d.dept_id
+
+John	IT
+Asha	HR
+Ravi	IT
+Meena	Finance
+David	NULL
+Sana	NULL
+NULL	Marketing
+
+
+--- CROSS JOIN -- RETRUNS ALL COMBINATIONS--
+select e.emp_name,d.dept_name
+from employees e
+cross JOIN departments d
+
+emp_name	dept_name
+John	IT
+Asha	IT
+Ravi	IT
+Meena	IT
+David	IT
+Sana	IT
+John	HR
+Asha	HR
+Ravi	HR
+Meena	HR
+David	HR
+Sana	HR
+John	Finance
+Asha	Finance
+Ravi	Finance
+Meena	Finance
+David	Finance
+Sana	Finance
+John	Marketing
+Asha	Marketing
+Ravi	Marketing
+Meena	Marketing
+David	Marketing
+Sana	Marketing
+
+---SELF JOIN --COMPARE EMPLOYEES WITH OTHERS IN THE SAME DEPARTMENT---
+
+SELECT e1.emp_name AS employee, e2.emp_name AS COlleague
+FROM employees e1
+JOIN employees e2
+ON e1.dept_id = e2.dept_id
+WHERE e1.emp_id <> e2.emp_id
+
+employee	COlleague
+John		Ravi
+Ravi		John
+
+What is a JOIN?
+	You can use aJOINto combine data from two or more tables. 
+
+What does a UNIONdo?
+	A UNION operation combines the results of two queries into one result.
+-------------
+
+Welcome to Amazon Relational Database Service (Amazon RDS).
+
+
+What is Amazon RDS? 
+	A managed database service that sets up and operates a relational database in the cloud
+	
+Running an unmanaged, standalone relational database can be time-consuming and have limited scope. 
+To address these challenges, AWS provides a service that sets up, operates, and scales the relational database without any ongoing administration. 
+
+Amazon RDS provides cost-efficient and resizable capacity while automating time-consuming administrative tasks. 
+
+Amazon RDS frees you to focus on your applications so that you can give them the performance, high availability, security, and compatibility that they need. 
+
+With Amazon RDS, your primary focus is your data and optimizing your application	
+
+
+Amazon RDS works well for web and mobile applications that need a database with high throughput, extensive storage scalability, and high availability. 
+
+Because Amazon RDS does not have any licensing constraints, it fits the variable usage pattern of these applications. 
+
+For small and large ecommerce businesses, Amazon RDS provides a flexible, secured, and low-cost database solution for online sales and retailing. 
+
+Mobile and online games require a database platform with high throughput and availability. 
+Amazon RDS manages the database infrastructure so that game developers do not need to worry about provisioning, scaling, or monitoring database servers
+
+
+What is a DB instance?
+	A DB instance is an isolated database environment that runs in the cloud
+	
+	
+DB instance class
+	•Central processing unit (CPU)
+	•Memory
+	•Network performance 
+	
+DB instance storage
+	•Magnetic
+	•General purpose solid state drive (SSD)
+	•Provisioned input/output operations per second (IOPS)	
+	
+Amazon RDS supports the following database types: 
+	•MySQL
+	•Aurora
+	•Microsoft SQL Server 
+	•PostgreSQL 
+	•MariaDB
+	•Oracle	
+	
+Amazon RDS backup options include the following:
+	
+	Automatic:-
+		Creates automated backups (data and transaction logs) of DB instances during the backup window
+	
+	Manual:-
+		Creates storage volume snapshots of your DB instances
+		
+------------
+What is Aurora? 
+	•Aurora is part of the managed database service Amazon RDS. Aurora is a relational database engine.  
+	•A database engine is a service for storing, processing, and securing data. 
+	
+Some of the benefits of Aurora include the following: 
+	•Aurora uses the same code, tools, and applications as existing MYSQL and PostgreSQL databases. 
+	•Aurora includes a high-performance storage subsystem. Its database engine is customized to take advantage of that fast distributed storage. 
+	•An Aurora DB has clusters that consist of one or more DB instances and a cluster volume that manages the data for those DB instances.
+	
+Aurora DB cluster
+	An Aurora DB cluster consists of one or more DB instances and a cluster volume that manages the data for those DB instances	
+	
+What is an Aurora cluster volume?
+	An Aurora cluster volume is a virtual database storage volume that spans multiple Availability Zones. 
+	Each Availability Zone has a copy of the DB cluster data.	
+	
+Two types of DB instances make up an Aurora DB cluster.
+
+Primary DB instance
+	The primary DB is the main instance. The instance allows read and write operations and allows for data modification. 
+Aurora Replica
+	The Aurora Replica connects to the same storage volume as the primary DB instance and supports only read operations	
+	
+What is one of the database engines that you can use in Amazon RDS?
+	Amazon RDS supports the following databases types: 
+		•MySQL
+		•Aurora
+		•Microsoft SQL Server 
+		•PostgreSQL 
+		•MariaDB
+		•Oracle Database
+
+What is Aurora?
+	Aurora is a fully managed relational database engine that is compatible with MySQL and PostgreSQL	

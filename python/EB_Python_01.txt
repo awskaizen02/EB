@@ -339,3 +339,193 @@ print(type(y))
 
 print(x)
 print(y)
+
+--------------------------------------------------------------------------------
+Python has specific commands that you can use to change an object from one data type to another.
+•float(): In the example, 4 is assigned to the variable x. By its nature, 4 is an integer.
+However, x must be identified as a float, so the float()command was used.The result is 4.0.
+•int(): By passing x back into the int(x)command, it receives 4 back. This command truncates the decimals. 
+•Note: Usingint()is not the same as rounding. It only removes any decimal digits that the number has. 
+It does not round the decimal numbers up or down, so be careful.
+
+•Strings contain text, which can be a single character or paragraphs of text.
+•Strings are characters that are enclosed between quotation marks. 
+•Strings can contain numbers.
+•Three ways of notating a string are: 
+	–Single quotation marks (' ')
+	–Double quotation marks (" ")
+	–Triple quotation marks (''' ''')
+
+The triple quote notation allows a string to span multiple lines and include non-printable formatting characters such as Newline and Tab	
+
+String concatenation
+
+	•Strings are immutable. When you manipulate them, you create a new string. 
+	•You can concatenateor add strings together, which creates a new string.
+	•It is possible to create an empty string.
+		–Example: x = ""
+
+
+Note: If you want a space between the words of your new string, you must add it into one of the original strings. Otherwise, Python adds them as-is, without inserting a space
+
+•This simple Python program adds the numbers 1and 1together.•The result is 2, as displayed on the following line.•The angle brackets (>>>) are not part of the program. The Python interpreter displays them
+
+>>> 1
+1
+>>> 1 + 1
+2
+>>>
+
+•In this example, x is a variable that holds the number 1.
+•When you do something with variables, Python looks up the values to understand what to do
+
+>>> x =1
+>>> x+x
+2
+>>>
+
+•You can have as many variables as you want.
+•You can name your variables whatever you want, within certain restrictions.
+•Restrictions are:
+	–A variable name can only contain letters, numbers, and underscores ( _ ). 
+	–A variable name cannot begin with a number.
+	–A variable name cannot be a keyword in Python
+	
+-------------------------------------
+Operators
+
+Arithmetic operators			+, -,*,/, %, **, //	
+Comparison (relational) operators	<, >,<=,>=,==, !=	
+Assignment operators			=,+=,-=,*=,/=, %=, //=, **=, &=, |=, ^=, >>=, <<= 
+Logical operators			and, or, not
+Membership operators			in, not in
+Identity operators			is, is no
+
+Python also has bitwise operators that allow the manipulation of a number at the bit level.
+
+# Variables
+a = 15
+b = 4
+
+# Addition
+print("Addition:", a + b)  
+
+# Subtraction
+print("Subtraction:", a - b) 
+
+# Multiplication
+print("Multiplication:", a * b)  
+
+# Division
+print("Division:", a / b) 
+
+# Floor Division
+print("Floor Division:", a // b)  
+
+# Modulus
+print("Modulus:", a % b) 
+
+# Exponentiation
+print("Exponentiation:", a ** b)
+
+------------
+Comparison Operators
+
+a = 13
+b = 33
+
+print(a > b)
+print(a < b)
+print(a == b)
+print(a != b)
+print(a >= b)
+print(a <= b)
+
+
+Logical Operators
+
+
+a = True
+b = False
+print(a and b)
+print(a or b)
+print(not a)
+
+print('It\'s alright')
+print("He is called 'Johnny'")
+print('He is called "Johnny"')
+
+
+a = "Hello"
+b = "World"
+c = a + b
+print(c)
+
+age = 36
+name = "tim"
+txt = f"My name is {name}, I am {age}"
+print(txt)
+
+name = input("Enter your name: ")
+age = int(input("Enter your age: "))
+txt = f"My name is {name}, I am {age}"
+print(txt)
+
+
+#txt = "We are the so-called "Vikings" from the north."
+#print(txt)
+txt = "We are the so-called \"Vikings\" from the north."
+print(txt)
+
+
+•A statement is usually a line of code, and each line of code that you have seen so far is a single statement.
+•A statement is an individual instruction to Python.
+•This code has three statements.
+•By assigning apples to oranges, you are changing the value of apples. 
+If you print(apples), what is the response?
+
+apples = 2
+oranges = 3
+apples = oranges
+
+print(apples)
+
+Functions, strings, and variables•Store strings in variables
+
+age = 36
+name = "tim"
+txt = f"My name is {name}, I am {age}"
+print(txt)
+
+
+•An exception raises an error.
+•Examples include:
+	–Referencing a variable by the incorrect name
+	–Dividing a number by zero
+	–Trying to read a file that does not exist on your computer
+•Exceptions result in a stack trace, which is a listing of the various ways that something went wrong
+
+
+print(x)
+
+print(10/0)
+
+with open(nofile.txt)as f:
+    data = f.read
+    
+    
+Does Python limit you from using specific characters when you declare a variable?
+	Yes, you cannot use symbols such as !, @, #, $, and others in variable declarations.
+	
+How are functions called in Python?
+	Functions are called by name.
+	
+Which data type do you use to store the value 1.7—an integer or a float?
+	float
+
+What is the += operator used for?  
+	The plus equals (+=) operator adds the rvalue(the value to the right of the operator) to the lvalue(the value to the left of the operator). The lvalue is usually a variable. For example, if xis 5, consider the following code: x+=10After that code is run, the value of xis 15.
+
+x = 5
+x += 10
+print(x)

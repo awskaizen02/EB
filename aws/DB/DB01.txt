@@ -1,0 +1,423 @@
+what is data ?
+ Collection of values ,numbers
+ 
+what is Metadata?
+	Data which defines other data
+	it can define the names, type of cols
+	
+	
+ID	NAME		Salary		-- MetaData
+101	Tim		80000		-- Data
+102	Tom		95000		
+	
+	
+	3 types of Data
+	
+	* Structured Data
+	* Semi Structured Data
+	* Unstructured Data
+	
+Structured Data:
+	data which is in the form of tables .. cols and rows
+	ex: excel sheets, database like SQL, oracle
+	
+semi Structured Data:
+	data has a structured in place but not in the form of tab;e
+		JSON,XML
+
+unStructured Data:
+	data which does not have any structure
+		videos,images
+		
+		
+database have collection of tables
+
+in tables data where stored
+
+
+what is a data models?
+a data model is a conceptual blueprint that describes
+	How data is organized
+	How data is stored
+	How data relates to each other
+	what rules apply to the data
+	
+	
+•A data model represents the logical structure of the data that is stored in a database.
+	•Data models are used to determine how data can be stored and organized. 
+	•The following items are examples of data models:
+		–Relational
+		–Semi-structured
+		–Entity relationship
+		–Object-based 
+		
+	
+
+	
+What is a schema?
+	•A database schema defines the organization of a database. 
+	•It is based on the data model.
+	•It describes the elements of a database’s design:
+		–Tables
+		–Columns
+		–Relationships
+		–Constraints
+
+# https://www.geeksforgeeks.org/sql/sql-data-types/
+
+```	
+plan to create a emp table
+
+create database n17
+use n17
+create table emp(emp_id int, emp_name varchar(50), emp_salary int)
+
+```		
+
+Databases can operate on a small scale. 
+They might run on one computer and support a single user.
+
+Other databases are distributed across multiple systems and locations across a company’s network, or they can be cloud-based databases that support millions of users
+
+
+What is a relational database?
+	•A relational database is a collection of data items that have predefined relationships between them. 
+	•A relational database is often referred to as a structured query language (SQL) database.
+	•The database requires a fixed definition of the structure of the data.
+	•The data is stored in tables with rows and columns
+	
+Main reasons to use a relational database:
+	•Natively supports SQL
+	•Provides data integrity
+	•Supports transactions 
+
+Use cases:
+	•Ecommerce 
+	•Customer relationship management (CRM): Managing interactions with customers 
+	•Business intelligence (BI) tools: Finance reporting and data analysis	
+	
+Example relational databases:
+	•MySQL
+	•Amazon Aurora
+	•PostgreSQL
+	•Microsoft SQL Server
+	•Oracl	
+	
+columns (fields)	--> store the type of data
+Rows(records)		--> store actual data values
+Primary key(PK)		--> uniquel identifies each row
+Foreign Key(FK)		--> link one table to another
+
+------------
+What is a nonrelational database?
+	•A nonrelational database is a database that does not follow the relational model. 
+	•An nonrelational database does not require a fixed definition of the structure of the data.
+	•A nonrelational database, which is often referred to as a NoSQL database, is a database that does not use a table structure to store data.
+	
+A nonrelational database is often referred to as a NoSQL database. 
+NoSQLstands for Not only SQLbecause you can use other languages in addition to SQL to access and query a nonrelational database.
+	
+
+In a relational database, objects are broken down into multiple tables (customers, orders, and more) by using a fixed schema. With a nonrelational database, objects are stored instead with flexible schemas with no constraints, or as documents in JSON or XML formats.
+
+NoSQL databases use various data models for accessing and managing data. 
+These types of databases are optimized specifically for applications that require large data volumes, low latency, and flexible data models. 
+These requirements are achieved by relaxing some of the restrictions around data consistency that other databases use	
+
+
+Relational databases (SQL)
+
+Pros:	Advantage
+	•Known and reliable technology
+	•Simple-to-write complex queries
+	•Well-known SQL language
+	•Well-supported transactions
+
+Cons: Disadvantage
+	•Use vertical scaling
+	•Include a fixed schem
+	
+Nonrelational databases (NoSQL)
+
+Pros:  Advantage
+	•Flexible schema
+	•Good fit for storing and fast retrieval of massive amounts of data of different types
+	•Horizontal scaling
+	•Good fit for hierarchical data
+	
+Cons:  Disadvantage
+	•Are a relatively new technology
+	•Do not guarantee data integrity
+	•Are not a good fit for complex queries or transactional applications	
+	
+	
+-------
+How do you manage stored data?
+	A DBMS is software that provides database functionality. 
+
+What is a DBMS?
+	•A DBMS is software or database as a service(DBaaS) that provides database functionality. 
+	•It is used mainly for the following: 
+		–Creating databases
+		–Inserting data into a database
+		–Storing, retrieving, updating, or deleting data in a database 
+	•The primary benefit of a DBaaS is to avoid the cost of installing and maintaining servers
+	
+The following are two variations of DBMSs: 
+	•Single-user DBMS applications, such as Microsoft Access
+	•Multiple-user DMBS applications, such as Oracle Database, Microsoft SQL Server, MySQL, and IBM Db2	
+	
+DBaaSA 	few key points about cloud-based databases 
+	•Hosted by third
+		-party providers:–These database servers are hosted in third-party data centers and accessed over the internet (the cloud) instead of being hosted on local networks.
+	
+	•Reduced cost:
+		–These databases reduce the cost of installing and maintaining servers.
+	
+	•Fully managed:
+		–For example, with managed AWS databases, you don’t need to manage database management tasks, such as server provisioning, patching, setup, configuration, backups, or recovery.
+	
+	•Faster:
+		–With these databases, you can use companies, such as AWS, that offer large amounts of storage and processing power in their data centers.	
+		
+Which type of database is often referred to as a SQL database?
+	A relational database.
+	
+What is the purpose of a DBMS?
+	A DBMS is software that provides database functionality. 
+	
+Name one component of a database?
+Any one of the following answers is correct: data, data models, schema, and small scale or distributed		
+
+---------
+
+You will learn how to do the following:
+	•List different ways to interact with relational databases.
+	•Define the characteristics of a transaction.
+
+Key terms:
+	•Database analyst
+	•Database administrator
+	•Transaction
+	•Atomicity, consistency, isolation, and durability (ACID)
+	
+	
+	•Atomicity ensures that changes are successfully completed all at once or not at all.
+	•Consistency ensures that any changes will not violate the integrity of the database, including any constraints.
+	•Isolation keeps all transactions in isolation. Transactions are isolated so that they do not interfere with the other transactions.
+	•Durability ensures that as soon as a transaction is committed, the change is permanent.
+	
+	
+	
+Data sharing 
+Making data available to multiple users
+	More and more, data needs to be made accessible to users who previously did not have access or the ability to update information in a timely manner. 
+	From developers to end users, companies can now empower their employees to use data within databases and interact with these databases in various ways.	
+	
+	
+Application developer
+	–Creates applications that populate and manipulate the data within a database according to the application’s functional requirements
+•End user
+	–Uses reports that are created from the information within the database
+•Data analyst
+	–Collects, cleans, and interprets data within a database system
+•Database administrator
+	–Designs, implements, administers, and monitors data in database systems	
+	–Ensures consistency, quality, and security of the database	
+------------------------
+What are transactions?
+	•A transaction is a collection of changes made to a database that must be performed as a unit.
+	•For example, suppose that you have an account table, which keeps track of bank account balances for customers. Suppose a customer wants to transfer $100 from their checking account to their savings account. 
+	Each account type has a row in the table. You must do the following:
+	–Reduce the balance of the checking account row by $100.
+	–Increase the balance of the savings account row by $100.
+	–The two change operations must either both succeed or both fail in order to preserve the integrity of the database. 
+	You cannot have one change succeed and the other fail.
+	•A transaction is not successful unless each of its operations is successful.	
+	
+	
+	
+What are two different roles mentioned in this module that interact with databases?
+	End users, data analysts, database administrators, and application developers
+
+What are the different transaction states?
+	Active state, partially committed, failed state, aborted state, and committed state
+	
+What are two primary models for database interaction?
+	Client-server model and 
+	three-tier web application mode	
+	
+------------------------
+
+Recall that SQL (pronounced SEE-kwell) is the language that is used for querying and manipulating data. 
+SQL is also used for defining structures in databases. 
+SQL is a standardprogramming languagefor relational databases.
+
+What can SQL do?
+	•SQL can perform many of the necessary actions on a database.
+
+What are SQL sublanguage groups?
+•Data manipulation language (DML)–You can use DML to view, add, change, or delete data in a table.  
+•Data definition language (DDL)–You can use DDL to define and maintain the objects in your database (its schema). 
+The schema includes the tables, columns, and data types of your database. 
+•Data control language (DCL)–DCL statements control access to the data in a database.
+
+DML - Description
+•Views, changes, and manipulates data in a table
+•Includes commands to select, update, and insert data into a table, and to delete data from a table
+•Is typically used by data analysts, report authors, and programmers who write client applications 
+
+Statements
+	•SELECT: Retrieves data from a table
+	•INSERT: Adds rows to a table
+	•UPDATE: Modifies rows in a table
+	•DELETE: Deletes rows from a table
+	
+	
+DDL	Description
+	•Creates and defines the database and the objects in it
+	•Includes commands to create and delete tables
+	•Is typically used by database administrators and programmers
+
+Statements
+	•CREATE: Creates a database or a table
+	•ALTER TABLE: Adds, deletes, or modifies columns in a table; also adds or deletes constraints
+	•DROP: Deletes a database object, such as a table or a constrain	
+	
+DCL	Description
+
+	•Controls access to the data in a database
+	•Includes commands to grant or revoke database permissions
+	•Is typically used by database administrators and programmers 
+
+Statements
+	•REVOKE: Revokes permissions from a database user
+	•GRANT: Grants permissions to a database user
+	
+
+SQL Data Type			Description				Example
+INT		Represents an integer					120000
+CHAR		Represents a fixed-length character string		'United States of America'
+FLOAT		Represents a floating point number			3.1415
+DATETIME	Represents a date and time combination			'2022-07-18 16:48:12'	
+
+
+
+Identifiers
+•Identifiers represent the names of the objects that the user creates, in contrast to language keywords or statements
+•As a recommended practice, capitalize language keywords and commands, and define identifiers in lowercase.
+•It is important to remember that different database management systems handle capitalization conventions differently.
+
+
+Constraints on data Constraints enforce limits on the type of data that can go into a table. 
+
+•NOT NULL:
+	NOT NULL ensures that a column does not hold a NULL value.
+•UNIQUE: 
+	UNIQUE	requires a column or set of columns to have values that are unique to those columns.
+•DEFAULT: 
+	If no value was provided for the column, DEFAULT provides a value when the DBMS inserts a row into a table
+	
+Constraints are used to define rules that permit or limit which values can be stored in columns.
+Constraints are used to limit the kind of data that can be	entered into a table.
+Constraints are declared when the table is created.
+The purpose of constraints is to enforce the data integrity of a database	
+
+
+What are reserved terms?
+•Reserved terms are SQL keywords or symbols that have specific meanings when being processed. 
+•For clarity and to avoid errors, do not use reserved terms in the names of databases, tables, columns, or other database objects
+
+Reserve term examples:
+Symbols		#	;	:		@	
+Key Words	ADD	CLOSE	DATABASE	EXISTING
+
+
+-------------
+
+Purposeful naming conventions 
+•Carefully select purposeful names (identifiers).
+•Certain factors should drive your naming conventions. 
+For example, for the database, tables, and columns, consider the following factors:
+	–Rules and limitations that the DBMS imposes
+	–Naming conventions that the organization adopts
+	–Clarity
+	
+	
+CREATE TABLE statement
+•A table is a logically organized unit of data storage in SQL. 
+•To create a table, use the CREATE TABLE statement:CREATE TABLE city (...);
+•To create a table only if a table with the same name does not already exists, add the IF NOT EXISTS clause:CREATE TABLE IF NOT EXISTS city (...);	
+
+CREATE TABLE city(id INTEGER NOT NULL PRIMARY KEY,name VARCHAR(20)DEFAULT NULL,
+country_code VARCHAR(25)NOT NULL,district INTEGER NOT NULL);
+
+	•Each column has a specific data type.
+	•Some data types require one or more parameters. For example, a parameter can be used to specify a maximum length.
+	•In a CREATE TABLEstatement, separate column definitions with a comma.
+	
+Primary keys (PKs) and foreign keys (FKs)
+
+Primary key
+	A primary key is a special column in a table that has a unique value for each row and uniquely identifies the row.
+	
+Foreign key
+	A foreign key is a special column in a table that holds the primary key value from another table. 
+	A foreign key creates a relationship between the two tables	
+	
+	
+Referential integrity: 
+	A database quality where every non-NULL foreign key value matches an existing, primary key value	
+	
+To removea table, use the DROP TABLE	statement	
+
+-------------
+Character string
+	This data type is described by a character string data type descriptor
+	
+Data Type				•Description
+CHAR(length)		•This data type is a character string with a fixed length.
+			•Values for this type must be enclosed in single quotation marks (' ')
+			
+VARCHAR(length)		•This data type is a variable length character string, and its maximum length is fixed.
+
+CLOB(length)		•A Character Large Object (CLOB) is a large character string or text data that can have a 
+			length in the order of gigabytes.
+			•A CLOB is usually stored in a separate location that is referenced in the table itself.	
+			
+			
+			
+Data Type				•Description
+
+INTEGER			Represents an integer. The minimum and maximum values depend on the DBMS.Example: 102030
+
+SMALLINT		Is the same as the INTEGER type except that it might hold a smaller range of values. 
+			The range depends on the DBMS. Example: 10
+
+BIGINT			Is the same as the INTEGER type except that it might hold a larger range of values. 
+			The range depends on the DBMS. Example: 98765432101	
+			
+DECIMAL(p, s)		This data type represents an exact number with a precision p and a scale of s. 
+			It is a decimal number, which is a number that can have a decimal point in it. Example: Decimal(10,3) could have 1234567 or 1234567.123 as valid entries.
+
+FLOAT(p)		This data type is a floating point number with a precision of p. Precision is greater than or 		
+			equal to one, and the maximum precision depends on the DBMS.
+
+REAL			This data type is the same as the FLOAT type, except that the DBMS defines the precision			
+
+DATE			Represents a dateExample: yyyy-mm-dd
+
+TIME			Represents a time of day without the time zoneExample: hh:mm:ss
+
+TIMESTAMP		Represents a moment in time indicated by a date and a timeExample: yyyy-mm-dd hh:mm:ss
+
+What is the SQL statement that is used to create a table inside a database? 
+	The statement CREATE TABLE is used to create a table in a database.
+	
+What is the purpose of a primary key in a table?
+	A primary key is used to create a unique identifier for each row in a table
+	
+	
+create table city (Name CHAR(50), Region char(30));	
+
+

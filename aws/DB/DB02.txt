@@ -1,0 +1,574 @@
+Inserting Data into a Database
+
+	At the core of the lesson You will learn how to do the following:
+		•Import a comma-separated values (.csv) file into a table.
+		•List common reasons for cleaning data before importing it into a database.
+		•Insert rows into an existing table
+	Key terms:
+		•INSERT INTO statement
+		•DESCRIBE statement
+		•NULL value
+		
+What is a .csv file?
+A .csv file is a simple text file in which information is separated by commas.
+•.csv files can be opened in any program that works with plain text.
+•.csv files have the following format:
+	–Each line contains the same sequence of data.
+	–Each data point is separated by a comma.
+•These files are most commonly used to import or export data in databases and spreadsheets		
+
+
+•Verify that the .csv file has data that matches the number of columns of the table and the type of data in each column.
+•Create a table in MySQL with a table name that corresponds to the .csv file that you want to import.
+•Import by using the LOAD DATA statement.
+–If the first row of the file contains column headers, use the IGNORE 1 ROWS clause to ignore the first row.
+–If the rows in the file are terminated by a newline character, use the TERMINATED BY '\n'clause to indicate so
+
+This statement imports data from the temporary file into the city table
+	
+	LOAD DATA INFILE 'c:/tmp/city.csv'INTO TABLEcityFIELDS TERMINIATED BY ' , ' 
+	ENCLOSED BY '"'LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+	
+Note that the ENCLOSED BYclause indicates that each field in the file is enclosed by the specified character. For example, a line in the .csv file appears as follows:"ABW", "Aruba", "North America", "193.00"	
+
+
+This statement exports data from the city table and places it into the temporary city.csv file:	
+	
+	SELECT id, name, countrycode FROM city INTO OUTFILE '/tmp/mysqlfiles/city.csv'
+	FIELDS TERMINATED BY ','ENCLOSED BY '"'LINES TERMINATED BY '\n';
+
+It will output the selected columns from the city table into the specified file
+
+When importing and exporting data in .csv files, some data might contain errors. The next section covers cleaning data.
+
+
+Why clean data?
+	As changes are made to databases over time, issues can arise due to disorganization or errors in the data. 
+	Data should be cleaned for a number of reasons, but the following list contains the main reasons:
+		•Increased productivity
+		•Improved data quality
+		•Fewer errors 
+
+To combat these issues, data can be cleaned by using the following SQL string functions:
+	•LEFT, RIGHT, and TRIM: Use these functions to select only certain elements of strings and remove certain characters.
+	•CONCAT: Combine strings from several columns and put them together.
+	•LOWER: Force every character in a string to be lowercase.
+	•UPPER: Force every character in a string to be uppercase
+	
+In this activity:  
+	•Discuss a few database errors, and create an example of what they might look like in a database. 
+	•The following list contains some potential errors: Time: 15 mins
+	–Data-entry errors
+	–Wrong data type
+	–Wrong code
+	–Illogical data
+	–Missing data
+	–Duplicate data
+	–Unacceptable characters in text
+	–Censored or truncated data
+	–Inconsistent data representation
+	–Data is not atomic
+	–Broken references
+
+To do:•Create an example of what these errors look like in a database. 
+Also, suggest a solution for these errors. •After creating an example solution, be ready to explain your findings to the class.
+
+Consider the following example:•Data-entry errors: In a database, this type of error could include entries with additional spaces in front of or behind the entry. These errors could be resolved by using the TRIM command to remove the spaces
+
+****
+DESCRIBE statement syntax
+	•The DESCRIBE statement provides a description of the specified table or view. 
+	Usually, tables have more than one column. 
+	•To use the INSERT statement, it is important to know how the table that you are you inserting the information into is formatted.
+	
+The DESCRIBE statement provides a description of the specified table or view. 
+Usually, tables have more than one column. To use the INSERT statement, it is important to know how the table that you are inserting the information into is formatted. 
+
+
+INSERT INTO statement
+	•This statement is fundamental to populating a database table with data.
+	•The SQL INSERT INTO statement is used to insert a single record or multiple records into a table.
+	•The SQL INSERT INTO statement is referred to as adata manipulation language(DML) command.
+	•The order of the columns is important.	
+	
+	The table where data will be inserted
+	Each column of the table where the data is going
+	Values against each column
+	
+CREATE TABLE emp_tbl (
+    emp_id INT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    department VARCHAR(50),
+    salary DECIMAL(10,2),
+    hire_date DATE
+);
+
+INSERT INTO emp_tbl (emp_id, first_name, last_name, department, salary, hire_date)
+VALUES
+(106, 'John',   ' ',      'IT',        55000.00, '2021-04-15');	
+
+INSERT INTO emp_tbl (  last_name, salary, hire_date)
+VALUES
+( 'Doe', 55000.00, '2021-04-15');
+
+•When you insert a row, you must specify a column where the data will go.
+•When you insert values, you must enclose the values with single quotation marks (' ') for character or date values.
+
+
+
+
+
+
+
+
+NULL statement purpose and syntax 
+
+NULL statements are used as place holders or to represent a missing value to improve readability. 
+They also clarify the meaning and actions of conditional statements.  
+The INSERT statement can insert a NULL value into a column. 
+You can insert a NULL value into an int column with a condition that the column must not have NOT NULL constraints.
+
+Example syntax
+
+	INSERT INTO tableName(Col_1) values(NULL);
+	
+	
+
+INSERT INTO emp_tbl (emp_id, first_name, last_name, department, salary, hire_date)
+VALUES
+(106, 'John',   ' ',      'IT',        55000.00, '2021-04-15');	
+
+The following statements are a few key points about the NULL statement:
+	•A relational database management system (RDBMS) can accept optional column values.
+	•NULL means not applicable or unknown,and it is different from zero or blank.
+	•IfNULL is in the database, it means that no value exists for that field in the database.
+	•Null is not equal to anything, not even itself.
+	•5 + null = null
+	•null= nullis FALSE
+	•Ifa column is created with a NOT NULLclause, you must put in a value when you do an INSERT.
+	Other wise, anerror message will appear.	
+	
+What are the three main steps for importing a .csv file?
+	Verify, create, and import
+
+What are two ways to use the INSERT INTO statement?
+	The INSERT INTO statement can be used to add a row with values for all columns in a table or only for select columns.
+	
+What is the purpose of NULL?
+	The term NULL is used to represent a missing value	
+	
+	
+****************************************
+
+Selecting Data from a Database
+
+
+You use the SELECT statement to select one or more columns from a table. 
+You can also use the SELECT statement when you want to access a subset of rows, columns, or both.
+
+
+When you query tables, you must include the FROM clause in your syntax. 
+
+select * from emp_tbl;
+
+SELECT id, name, countrycode FROM city;
+
+The result of the SELECT statement is called a result set. 
+
+It lists rows that contain the same number of columns.
+As you read from left to right, the statement begins with SELECT. 
+
+
+When thinking about how a query is processed, it is important to remember that the query is processed out of order. 
+The query will pull all of the data from the specified table and then work through each of the clauses as the example shows.
+
+
+
+SELECT	id, name, countrycode 
+FROM city
+WHERE countrycode ='BRA'
+
+Statement order of operation:
+	1.FROM the city table, get all data.
+	2.WHERE the countrycode is BRA, keep the row. (Ignore the others.)
+	3.SELECT the specified columns (id, name, and countrycode), and ignore the others.
+	
+The original table includes the following: id, name, countrycode, and district. By using the SELECT statement, the queried table shows the data limited to the columns requested in the query (id, name, and countrycode).
+	
+	
+When using the SELECT statement, it is important to remember the syntax structure of the statement
+
+Required clauses	SELECT colname1 [, colname 2, colname 3...]
+Required clauses	FROM tablename
+
+Optional clauses	WHERE condition
+Optional clauses	GROUP BY colname1 [, colname 2, colname 3...]
+Optional clauses	HAVING condition
+Optional clauses	ORDER BY colname1 [, colname 2, colname 3...]
+
+#  https://www.geeksforgeeks.org/sql/sql-select-query/
+
+The following are the basics of syntax:
+	•The clause is followed by the specific items that are acted on. In this example, the column names follow the SELECTclause.
+	•Brackets ([ ]) enclose optional parameters.
+	•With the SELECT clause, you must specify one or more columns or use an asterisk(*)to request all columns.
+	Here are some examples:
+	•Selecting a single column:
+		SELECTcolname1FROMtable_name;
+	•Selecting a single column and optional columns:
+		SELECTcolname1[, colname2, colname3 ...] FROMtable_name;
+	•Selecting all columns:
+		SELECT*FROMtable_name;
+		
+# https://www.w3schools.com/sql/sql_aggregate_functions.asp
+
+	SELECT continent, COUNT(*) FROM world.country GROUP BY continent;
+
+SELECT statement selects the rows from the country table, groups the rows by continent, and counts the number of rows in each group. The result is a listing of the number of countries in each continent. 
+
+Notice that the GROUP BY clause typically requires an aggregate function in the SELECT clause. 
+In this case, the COUNT() aggregate function is used to count the number of rows in a table
+
+----
+	SELECT continent, COUNT(*) FROM world.country GROUP BY continent HAVING COUNT(*) > 1;
+	
+The HAVING clause filters the results of a GROUP BY clause in a SELECT statement. 
+In this example, the query selects only the continents that have more than one country after the rows in the table are grouped by continent	
+
+--
+Optional clauses of the SELECT statement: ORDER BY
+
+	SELECT id, name, countrycode FROM world.city ORDER BY id;
+
+Get all the data from the city table, and order all rows by id. 
+After you find the rows that you are searching for, return only the id, name,and countrycode columns	
+
+Sort query results by one or more columns and in ascending or descending order.
+
+---
+Comments 
+begin with specific characters to denote that they are to be ignored and not run. 
+This example shows different ways to write comments in SQL.
+
+Single-line comment
+	•This type of comment begins with a double dash (--). 
+	•Any text between the double dash and the end of the line will be ignored and not performed.--Display the table structureDESCRIBEcity;
+	
+Inline comment
+	•This type of comment begins with a double dash (--). 
+	•This comment is similar to the single-line comment in that any text between the double dash and the end of the line will be ignored and not performed. 
+
+This comment differs in that it is preceded by syntax within the same line that is not ignored.
+
+SELECT name, countrycode   -- not ID
+FROM world.city
+WHERE countrycode = 'CHN';
+
+
+Multiple-line comment
+	•This type of comment begins with /* and ends with */
+	•Any text between the /* and */ will be ignored.
+
+	/* SELECTid, name, countrycode
+	FROM world.city
+	WHEREcountrycode = 'MEX'; */
+
+How do you select all columns in a table?
+	Use the SELECT * statement. 
+
+What are three ways to provide comments in your SQL code? 
+	•Single-line comments
+	•Multi-line comments
+	•Inline comments
+	
+What are the two required clauses for the SELECT statement? 
+	The SELECT clause with column names and the FROM clause with the table name
+	
+-----------------------
+
+Performinga Conditional Search
+
+
+A conditional search filters data based on one or more conditions.
+	
+	It tells the database:
+	
+	"Give me only the rows that match these criteria."
+	
+This is done using the WHERE keyword.
+
+---
+
+| Operator | Meaning               | Example                       |
+| -------- | --------------------- | ----------------------------- |
+| =        | equal to              | countrycode = 'CHN'           |
+| >        | greater than          | population > 1000000          |
+| <        | less than             | age < 18                      |
+| >=       | greater than or equal | salary >= 50000               |
+| <=       | less than or equal    | score <= 80                   |
+| <> or != | not equal to          | status <> 'Active'            |
+| BETWEEN  | range                 | price BETWEEN 100 AND 300     |
+| LIKE     | pattern matching      | name LIKE 'A%'                |
+| IN       | match multiple values | countrycode IN ('USA', 'IND') |
+
+
+--
+•Use SELECT statements to retrieve data from database tables.
+•Adding a WHERE clause to a SELECT statement limits the data that is retrieved from a table. 
+•The WHERE clause applies a search condition to each row of the SELECT statement.
+•The search condition uses operators to specify the data that the query includes
+
+
+The SELECT statement has five main clauses:
+	•FROM clause (required)
+	•WHERE clause
+	•GROUP BY clause
+	•HAVING clause
+	•ORDER BY clause
+
+The WHERE clause is used to filter the data that the query returns.
+The WHERE clause sets up a search condition that uses a logical test to decide whether a row should be included in a query.
+Search conditions compare two values by using an operator to test whether the search condition is met.
+If the search condition is met, the query returns the data items from the table.
+
+
+Search condition in a WHERE clause
+
+	SELECT continent, surfacearea, population, gnp 
+	FROM country 
+	WHERE name = 'Ireland’
+	
+----
+Three types of operators are used in search conditions:
+	•Arithmetic operators perform mathematical operations.
+	•Comparison operators compare values between data items.
+	•Logical operators are used to build compound conditions.
+	
+These operators can be used in SELECT, INSERT, UPDATE, and DELETE statements	
+
+
+The not-equal-to operator has two options:
+	!= and <>. 
+Which operator you use might be your personal preference, or it might be formally defined according to a company’s established coding standards and practices.
+---
+
+SELECT name, lifeexpectancy, lifeexpectancy+5.5
+FROM country
+WHERE gnp > 1300000;
+
++ = Arithmetic operator(Arithmetic operatorAdds 5.5 years to each lifeexpectancy value that is displayed in the output)
+> = Comparison operator
+
+---
+
+SELECT name, continent, population, population-350000
+FROM country
+WHERE name='United States';
+
+- =The arithmetic operator subtracts 350,000 from the population value and displays the result in the output
+= = Comparison operator
+
+---
+
+SELECT name, continent, population, population*1.15
+FROM country
+WHERE name = 'Malta'
+
+* = The arithmetic operator increases the population by 15 percentand displays the result in the output
+= = Comparison operator
+
+---
+
+SELECT name, region, population, surfacearea, population/surfacearea
+FROM country
+WHERE population/surfacearea > 3000
+
+/ = The arithmetic operator divides the population by the surfacearea to display the population density in the output
+= = Comparison operator
+
+
+---- Logical operators
+
+| Operator    | Meaning                             |
+| ----------- | ----------------------------------- |
+| **AND**     | All conditions must be true         |
+| **OR**      | At least one condition must be true |
+| **IN**      | Match multiple values using a list  |
+| **LIKE**    | Pattern matching using `%` or `_`   |
+| **BETWEEN** | Match values within a range         |
+| **NOT**     | Negates IN, LIKE, or BETWEEN        |
+
+
+---
+
+SELECT name, district, population
+FROM city
+WHERE countrycode = 'IND'
+AND
+district = 'Delhi';
+
+All WHERE clause conditions must be true for an AND operator to affect a SQL statement
+
+---
+
+
+SELECT name, district, population
+FROM city
+WHERE district = 'Delhi'
+OR district = 'Punjab';
+
+At least one WHERE clause condition must be true for an OR operator to affect a SQL statement
+
+---
+
+SELECT name, district, population
+FROM city
+WHERE district IN('Delhi','Punjab','Kerala');
+
+The IN operator returns the rows that match the listed values
+
+---
+
+SELECT name, district, population 
+FROM city
+WHERE district LIKE 'West%';
+
+The wildcard character % is used with the LIKE logical operator to substitute for one or more characters in a string.
+
+---
+
+SELECT countrycode, name
+FROM city
+WHERE countrycode LIKE '_B_';
+
+The wildcard character _ is used with the LIKE logical operator to substitute for a single character in a string
+
+---
+
+SELECT	countrycode, name, district, population
+FROM city
+WHERE population BETWEEN 500000 AND 505000;
+
+The range for a BETWEEN operator also includes both specified values.
+
+---
+SELECT name, district, population
+FROM city
+WHEREcountrycode = 'CAN' AND district NOT IN ('Ontario','Alberta')
+
+The NOT keyword can be used with IN, LIKE, and BETWEEN operators. 
+
+---
+
+SELECT name, district, population
+FROM city
+WHERE countrycode = 'CAN'ANDdistrict NOT IN ('Ontario','Alberta')
+
+
+SELECT name, district, population
+FROM city
+WHERE countrycode = 'CAN'
+AND district <>'Ontario'
+AND district <>'Alberta';
+
+----------------
+Operator precedence explained
+
+
+SQL operators are evaluated in a defined order in a SQL statement.
+
+Operators enclosed in paren theses 
+Operators for multiplication or division
+Operators for addition or subtraction 
+Comparison operators 
+NOT operators used with IN, BETWEEN, and LIKE
+AND operators
+OR, BETWEEN, IN, and LIKE operators
+
+
+
+SELEC Tname, district, population
+FROM city
+WHERE countrycode = 'PAK'
+AND district = 'Punjab' 
+OR district = 'Sindh';
+
+## The query returns data items with country code PAK and district of Punjab or district of Sindh
+
+SELECT name, district, population 
+FROM city
+WHERE countrycode = 'PAK'
+AND district = 'Punjab'
+OR district = 'Sindh'
+AND population > 1500000
+
+## An attempt is made to revise the query to exclude cities with populations less than 1.5 million people
+
+---
+SELECT name, district, population 
+FROM city 
+WHERE countrycode = 'PAK'
+AND district = 'Punjab'
+OR district = 'Sindh'
+AND population > 1500000;
+
+ ## all cities in pak and in punjab
+ ## plusall cities in Sindu with populations > 1,500,0000
+---
+
+SELECT name, district, population
+FROM city
+WHERE countrycode = 'PAK'
+AND(district = 'Punjab'OR district = 'Sindh')
+ANDpopulation > 1500000;
+
+## you get only cities that meet all three conditions
+### in pak
+### in pubjab or sindh
+### population greater than 1,500,000
+
+#### always use parentheses when combining AND + OR to avoid accidental logic mistakes
+
+--------------
+
+An alias is used to assign a temporary name to a table or column within a SQL query.
+	•The alias exists only while the SQL statement is running.
+	•Aliases are useful for assigning names to obscurely named tables and columns.
+	•Aliases are also used to assign meaningful names to query output that uses arithmetic SQL operators.
+	•Aliases can be specified in a SQL statement by using the optional AS keyword.
+	•If spaces are desired in an alias name, the alias should be defined in quotation marks.
+	
+-------------
+Databases use NULL to represent the absence of value for a data item.
+	•Because they have no value, NULL values cannot be compared to each other by using typical comparison operators.
+	•Because they have no value, NULL values are not equal to one another.
+	•Use IS NULL and IS NOT NULL when working with NULL values in a WHERE clause.
+	•Tables can be designed so that NULL values are not allowed
+	
+SELECT name, lifeexpectancy
+FROM country
+WHERE lifeexpectancy IS NULL
+AND name NOT LIKE '%Island%';	
+
+
+Because NULL is the absence of a value, any mathematical or comparison operation on NULL values will always return a NULL value.
+This property can lead to unexpected query results.In this query, the + 1 is being added to data items that have a NULL value for lifeexpectancy.
+The result of this calculation returns a NULL value for these items
+
+What is the purpose of a NULL value? 
+	NULL values indicate that no value has been provided for that data item.
+
+Why is it important to search for a NULL value in a table? 
+	It is important to search for NULL values in a table. 
+	NULL data items can be easily left out of query results when queries on the columns containing NULL values are part of the WHERE clause. 
+	This result can cause erroneous results, particularly when arithmetic or comparison operators are applied.
+
+How would you search a table for results that do not contain NULL? 
+	To search a table for results that do not contain NULL, include an IS NOT NULL operator in the WHERE clause of the query
+	
+What is the purpose of a condition in a query?
+	You can use conditions in a query to filter your search results.
+
+Why should you use aliases in SQL?
+	Aliases are often used to make column names more understandable	
